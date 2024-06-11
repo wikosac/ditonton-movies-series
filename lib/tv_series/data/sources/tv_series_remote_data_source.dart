@@ -1,7 +1,12 @@
 import 'package:ditonton/tv_series/data/models/tv_detail_response.dart';
 import 'package:ditonton/tv_series/data/models/tv_response.dart';
+import 'package:http/http.dart' as http;
 
 class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
+  TvSeriesRemoteDataSourceImpl({required this.client});
+
+  final http.Client client;
+
   @override
   Future<TvDetailResponse> getMovieDetail(int id) {
     // TODO: implement getMovieDetail
@@ -37,14 +42,18 @@ class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
     // TODO: implement searchMovies
     throw UnimplementedError();
   }
-
 }
 
 abstract class TvSeriesRemoteDataSource {
   Future<TvResponse> getNowPlayingMovies();
+
   Future<TvResponse> getPopularMovies();
+
   Future<TvResponse> getTopRatedMovies();
+
   Future<TvDetailResponse> getMovieDetail(int id);
+
   Future<TvResponse> getMovieRecommendations(int id);
+
   Future<TvResponse> searchMovies(String query);
 }

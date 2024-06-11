@@ -12,14 +12,4 @@ abstract class TvSeriesRepository {
   ResultFuture<TvSeriesDetail> getTvSeriesDetail(int id);
 
   ResultFuture<List<TvSeries>> getTvSeriesRecommendations(int id);
-
-  ResultFuture<List<TvSeries>> searchTvSeries(String query);
-
-  ResultFuture<String> saveWatchlist(TvSeriesDetail movie);
-
-  ResultFuture<String> removeWatchlist(TvSeriesDetail movie);
-
-  Future<bool> isAddedToWatchlist(int id);
-
-  ResultFuture<List<TvSeries>> getWatchlistTvSeries();
 }

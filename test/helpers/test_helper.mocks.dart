@@ -8,7 +8,7 @@ import 'dart:typed_data' as _i19;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:ditonton/common/failure.dart' as _i8;
-import 'package:ditonton/data/datasources/db/database_helper.dart' as _i15;
+import 'package:ditonton/watchlist/data/sources/database_helper.dart' as _i15;
 import 'package:ditonton/data/datasources/movie_local_data_source.dart' as _i13;
 import 'package:ditonton/data/datasources/movie_remote_data_source.dart'
     as _i11;
@@ -209,12 +209,12 @@ class MockDatabaseHelper extends _i1.Mock implements _i15.DatabaseHelper {
       (super.noSuchMethod(Invocation.method(#removeWatchlist, [movie]),
           returnValue: Future<int>.value(0)) as _i7.Future<int>);
   @override
-  _i7.Future<Map<String, dynamic>?> getMovieById(int? id) =>
+  _i7.Future<Map<String, dynamic>?> getWatchlistById(int? id) =>
       (super.noSuchMethod(Invocation.method(#getMovieById, [id]),
               returnValue: Future<Map<String, dynamic>?>.value())
           as _i7.Future<Map<String, dynamic>?>);
   @override
-  _i7.Future<List<Map<String, dynamic>>> getWatchlistMovies() =>
+  _i7.Future<List<Map<String, dynamic>>> getWatchlist() =>
       (super.noSuchMethod(Invocation.method(#getWatchlistMovies, []),
               returnValue: Future<List<Map<String, dynamic>>>.value(
                   <Map<String, dynamic>>[]))
