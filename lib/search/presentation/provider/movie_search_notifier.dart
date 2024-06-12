@@ -1,4 +1,4 @@
-import 'package:ditonton/common/state_enum.dart';
+import 'package:ditonton/core/utils/state_enum.dart';
 import 'package:ditonton/search/domain/entities/search.dart';
 import 'package:ditonton/search/domain/usecases/search_movies.dart';
 import 'package:flutter/foundation.dart';

@@ -1,7 +1,7 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/common/utils.dart';
+
+import 'package:ditonton/core/utils/state_enum.dart';
+import 'package:ditonton/core/utils/utils.dart';
 import 'package:ditonton/core/widgets/item_card.dart';
-import 'package:ditonton/search/presentation/widgets/search_card_list.dart';
 import 'package:ditonton/watchlist/presentation/provider/watchlist_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

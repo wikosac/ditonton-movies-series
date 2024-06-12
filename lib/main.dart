@@ -1,22 +1,23 @@
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/utils.dart';
+import 'package:ditonton/core/utils/constants.dart';
+import 'package:ditonton/core/utils/utils.dart';
 import 'package:ditonton/injection.dart' as di;
-import 'package:ditonton/presentation/pages/about_page.dart';
-import 'package:ditonton/presentation/pages/home_movie_page.dart';
-import 'package:ditonton/presentation/pages/movie_detail_page.dart';
-import 'package:ditonton/presentation/pages/popular_movies_page.dart';
-import 'package:ditonton/presentation/pages/search_page.dart';
-import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
+import 'package:ditonton/movies/presentation/pages/about_page.dart';
+import 'package:ditonton/movies/presentation/pages/home_movie_page.dart';
+import 'package:ditonton/movies/presentation/pages/movie_detail_page.dart';
+import 'package:ditonton/movies/presentation/pages/popular_movies_page.dart';
+import 'package:ditonton/movies/presentation/pages/search_page.dart';
+import 'package:ditonton/movies/presentation/pages/top_rated_movies_page.dart';
+import 'package:ditonton/movies/presentation/provider/movie_detail_notifier.dart';
+import 'package:ditonton/movies/presentation/provider/movie_list_notifier.dart';
+import 'package:ditonton/movies/presentation/provider/popular_movies_notifier.dart';
+import 'package:ditonton/movies/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:ditonton/watchlist/presentation/pages/watchlist_movies_page.dart';
-import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
-import 'package:ditonton/presentation/provider/popular_movies_notifier.dart';
-import 'package:ditonton/presentation/provider/top_rated_movies_notifier.dart';
-import 'package:ditonton/search/presentation/provider/movie_search_notifier.dart';
 import 'package:ditonton/watchlist/presentation/provider/watchlist_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'search/presentation/provider/movie_search_notifier.dart';
 
 void main() {
   di.init();

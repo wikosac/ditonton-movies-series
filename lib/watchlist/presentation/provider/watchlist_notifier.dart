@@ -1,4 +1,4 @@
-import 'package:ditonton/common/state_enum.dart';
+import 'package:ditonton/core/utils/state_enum.dart';
 import 'package:ditonton/watchlist/domain/entities/watchlist.dart';
 import 'package:ditonton/watchlist/domain/usecases/get_watchlist.dart';
 import 'package:flutter/foundation.dart';

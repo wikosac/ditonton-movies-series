@@ -1,6 +1,7 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/domain/usecases/get_popular_movies.dart';
+
+import 'package:ditonton/core/utils/state_enum.dart';
+import 'package:ditonton/movies/domain/entities/movie.dart';
+import 'package:ditonton/movies/domain/usecases/get_popular_movies.dart';
 import 'package:flutter/foundation.dart';
 
 class PopularMoviesNotifier extends ChangeNotifier {

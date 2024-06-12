@@ -1,10 +1,9 @@
 import 'dart:convert';
-
-import 'package:ditonton/common/exception.dart';
+import 'package:ditonton/core/errors/exception.dart';
 import 'package:ditonton/core/utils/constants.dart';
-import 'package:ditonton/data/models/movie_detail_model.dart';
-import 'package:ditonton/data/models/movie_model.dart';
-import 'package:ditonton/data/models/movie_response.dart';
+import 'package:ditonton/movies/data/models/movie_detail_model.dart';
+import 'package:ditonton/movies/data/models/movie_model.dart';
+import 'package:ditonton/movies/data/models/movie_response.dart';
 import 'package:http/http.dart' as http;
 
 abstract class MovieRemoteDataSource {
@@ -30,7 +29,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
     if (response.statusCode == 200) {
       return MovieResponse.fromJson(json.decode(response.body)).movieList;
     } else {
-      throw ServerException();
+      throw ServerException(message: response.body);
     }
   }
 
@@ -42,7 +41,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
     if (response.statusCode == 200) {
       return MovieDetailResponse.fromJson(json.decode(response.body));
     } else {
-      throw ServerException();
+      throw ServerException(message: response.body);
     }
   }
 
@@ -54,7 +53,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
     if (response.statusCode == 200) {
       return MovieResponse.fromJson(json.decode(response.body)).movieList;
     } else {
-      throw ServerException();
+      throw ServerException(message: response.body);
     }
   }
 
@@ -66,7 +65,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
     if (response.statusCode == 200) {
       return MovieResponse.fromJson(json.decode(response.body)).movieList;
     } else {
-      throw ServerException();
+      throw ServerException(message: response.body);
     }
   }
 
@@ -78,7 +77,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
     if (response.statusCode == 200) {
       return MovieResponse.fromJson(json.decode(response.body)).movieList;
     } else {
-      throw ServerException();
+      throw ServerException(message: response.body);
     }
   }
 
@@ -90,7 +89,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
     if (response.statusCode == 200) {
       return MovieResponse.fromJson(json.decode(response.body)).movieList;
     } else {
-      throw ServerException();
+      throw ServerException(message: response.body);
     }
   }
 }
