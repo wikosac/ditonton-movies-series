@@ -41,9 +41,9 @@ class WatchlistDataSourceImpl implements WatchlistDataSource {
   }
 
   @override
-  Future<String> removeWatchlist(WatchlistTable watchlistTable) async{
+  Future<String> removeWatchlist(int id) async{
     try {
-      final result = await databaseHelper.removeWatchlist(watchlistTable);
+      final result = await databaseHelper.removeWatchlist(id);
       if (result != 0){
         return 'Success';
       } else {
@@ -58,7 +58,7 @@ class WatchlistDataSourceImpl implements WatchlistDataSource {
 abstract class WatchlistDataSource {
   Future<String> insertWatchlist(WatchlistTable movie);
 
-  Future<String> removeWatchlist(WatchlistTable movie);
+  Future<String> removeWatchlist(int id);
 
   Future<WatchlistTable?> getWatchlistById(int id);
 

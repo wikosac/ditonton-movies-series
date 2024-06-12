@@ -5,6 +5,8 @@ abstract class Failure extends Equatable {
 
   Failure(this.message);
 
+  String get errorMessage => 'Error: $message';
+
   @override
   List<Object> get props => [message];
 }

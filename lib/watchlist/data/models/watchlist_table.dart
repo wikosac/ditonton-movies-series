@@ -1,3 +1,4 @@
+import 'package:ditonton/watchlist/domain/entities/watchlist.dart';
 import 'package:equatable/equatable.dart';
 
 class WatchlistTable extends Equatable {
@@ -7,14 +8,21 @@ class WatchlistTable extends Equatable {
   final String posterPath;
 
   factory WatchlistTable.fromMap(Map<String, dynamic> map) => WatchlistTable(
-    id: map['id'],
-    posterPath: map['posterPath'],
-  );
+        id: map['id'],
+        posterPath: map['posterPath'],
+      );
+
+  factory WatchlistTable.fromWatchlist(Watchlist watchlist) => WatchlistTable(
+        id: watchlist.id,
+        posterPath: watchlist.posterPath,
+      );
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'posterPath': posterPath,
-  };
+        'id': id,
+        'posterPath': posterPath,
+      };
+
+  Watchlist toWatchlist() => Watchlist(id: id, posterPath: posterPath);
 
   @override
   List<Object?> get props => [id];

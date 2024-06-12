@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/usecases/get_watchlist_movies.dart';
-import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
+import 'package:ditonton/watchlist/domain/usecases/get_watchlist.dart';
+import 'package:ditonton/watchlist/presentation/provider/watchlist_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -12,14 +12,14 @@ import 'watchlist_movie_notifier_test.mocks.dart';
 
 @GenerateMocks([GetWatchlistMovies])
 void main() {
-  late WatchlistMovieNotifier provider;
+  late WatchlistNotifier provider;
   late MockGetWatchlistMovies mockGetWatchlistMovies;
   late int listenerCallCount;
 
   setUp(() {
     listenerCallCount = 0;
     mockGetWatchlistMovies = MockGetWatchlistMovies();
-    provider = WatchlistMovieNotifier(
+    provider = WatchlistNotifier(
       getWatchlistMovies: mockGetWatchlistMovies,
     )..addListener(() {
         listenerCallCount += 1;
@@ -34,7 +34,7 @@ void main() {
     await provider.fetchWatchlistMovies();
     // assert
     expect(provider.watchlistState, RequestState.Loaded);
-    expect(provider.watchlistMovies, [testWatchlistMovie]);
+    expect(provider.watchlist, [testWatchlistMovie]);
     expect(listenerCallCount, 2);
   });
 

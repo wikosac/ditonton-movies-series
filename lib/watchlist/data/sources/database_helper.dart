@@ -44,12 +44,12 @@ class DatabaseHelper {
     return await db!.insert(_tblWatchlist, watchlistTable.toJson());
   }
 
-  Future<int> removeWatchlist(WatchlistTable watchlistTable) async {
+  Future<int> removeWatchlist(int id) async {
     final db = await database;
     return await db!.delete(
       _tblWatchlist,
       where: 'id = ?',
-      whereArgs: [watchlistTable.id],
+      whereArgs: [id],
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:ditonton/domain/entities/genre.dart';
+import 'package:ditonton/watchlist/domain/entities/watchlist.dart';
 import 'package:equatable/equatable.dart';
 
 class MovieDetail extends Equatable {
@@ -29,6 +30,8 @@ class MovieDetail extends Equatable {
   final String title;
   final double voteAverage;
   final int voteCount;
+
+  Watchlist toWatchlist() => Watchlist(id: id, posterPath: posterPath);
 
   @override
   List<Object?> get props => [
