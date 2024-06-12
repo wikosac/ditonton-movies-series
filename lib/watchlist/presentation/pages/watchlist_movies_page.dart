@@ -1,18 +1,19 @@
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/common/utils.dart';
-import 'package:ditonton/search/presentation/widgets/movie_card_list.dart';
+import 'package:ditonton/core/widgets/item_card.dart';
+import 'package:ditonton/search/presentation/widgets/search_card_list.dart';
 import 'package:ditonton/watchlist/presentation/provider/watchlist_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class WatchlistMoviesPage extends StatefulWidget {
-  static const ROUTE_NAME = '/watchlist-movie';
+class WatchlistPage extends StatefulWidget {
+  static const ROUTE_NAME = '/watchlist';
 
   @override
-  _WatchlistMoviesPageState createState() => _WatchlistMoviesPageState();
+  _WatchlistPageState createState() => _WatchlistPageState();
 }
 
-class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
+class _WatchlistPageState extends State<WatchlistPage>
     with RouteAware {
   @override
   void initState() {
@@ -50,8 +51,8 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
             } else if (data.watchlistState == RequestState.Loaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final movie = data.watchlist[index];
-                  return MovieCard(movie);
+                  final item = data.watchlist[index];
+                  return ItemCard(id: item.id, posterPath: item.posterPath);
                 },
                 itemCount: data.watchlist.length,
               );

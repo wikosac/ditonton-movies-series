@@ -6,9 +6,9 @@ import 'package:ditonton/search/domain/entities/search.dart';
 import 'package:flutter/material.dart';
 
 class MovieCard extends StatelessWidget {
-  final Search search;
+  final Movie movie;
 
-  MovieCard(this.search);
+  MovieCard(this.movie);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class MovieCard extends StatelessWidget {
           Navigator.pushNamed(
             context,
             MovieDetailPage.ROUTE_NAME,
-            arguments: search.id,
+            arguments: movie.id,
           );
         },
         child: Stack(
@@ -36,10 +36,17 @@ class MovieCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      search.title,
+                      movie.title ?? '-',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: kHeading6,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      movie.overview ?? '-',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: kTextTheme.bodyMedium,
                     ),
                   ],
                 ),
@@ -52,7 +59,7 @@ class MovieCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${search.posterPath}',
+                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
                   width: 80,
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(),
