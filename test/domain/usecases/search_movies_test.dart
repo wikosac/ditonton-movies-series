@@ -1,18 +1,18 @@
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/search/domain/usecases/search_movies.dart';
+import 'package:ditonton/search/domain/usecases/search_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../helpers/test_helper.mocks.dart';
 
 void main() {
-  late SearchMovies usecase;
+  late SearchUseCase usecase;
   late MockMovieRepository mockMovieRepository;
 
   setUp(() {
     mockMovieRepository = MockMovieRepository();
-    usecase = SearchMovies(mockMovieRepository);
+    usecase = SearchUseCase(mockMovieRepository);
   });
 
   final tMovies = <Movie>[];

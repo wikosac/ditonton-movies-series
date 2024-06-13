@@ -21,7 +21,7 @@ class SearchPage extends StatelessWidget {
           children: [
             TextField(
               onSubmitted: (query) {
-                Provider.of<MovieSearchNotifier>(context, listen: false)
+                Provider.of<SearchNotifier>(context, listen: false)
                     .fetchMovieSearch(query);
               },
               decoration: InputDecoration(
@@ -36,7 +36,7 @@ class SearchPage extends StatelessWidget {
               'Search Result',
               style: kHeading6,
             ),
-            Consumer<MovieSearchNotifier>(
+            Consumer<SearchNotifier>(
               builder: (context, data, child) {
                 if (data.state == RequestState.Loading) {
                   return Center(
@@ -55,8 +55,8 @@ class SearchPage extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return Expanded(
-                    child: Container(),
+                  return Center(
+                    child: Text(data.message),
                   );
                 }
               },

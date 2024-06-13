@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/search/domain/usecases/search_movies.dart';
+import 'package:ditonton/search/domain/usecases/search_usecase.dart';
 import 'package:ditonton/search/presentation/provider/movie_search_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -10,16 +10,16 @@ import 'package:mockito/mockito.dart';
 
 import 'movie_search_notifier_test.mocks.dart';
 
-@GenerateMocks([SearchMovies])
+@GenerateMocks([SearchUseCase])
 void main() {
-  late MovieSearchNotifier provider;
+  late SearchNotifier provider;
   late MockSearchMovies mockSearchMovies;
   late int listenerCallCount;
 
   setUp(() {
     listenerCallCount = 0;
     mockSearchMovies = MockSearchMovies();
-    provider = MovieSearchNotifier(searchMovies: mockSearchMovies)
+    provider = SearchNotifier(searchUsecase: mockSearchMovies)
       ..addListener(() {
         listenerCallCount += 1;
       });

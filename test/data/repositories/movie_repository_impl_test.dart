@@ -310,7 +310,7 @@ void main() {
       when(mockRemoteDataSource.searchMovies(tQuery))
           .thenAnswer((_) async => tMovieModelList);
       // act
-      final result = await repository.searchMovies(tQuery);
+      final result = await repository.searchUsecase(tQuery);
       // assert
       /* workaround to test List in Right. Issue: https://github.com/spebbe/dartz/issues/80 */
       final resultList = result.getOrElse(() => []);
@@ -323,7 +323,7 @@ void main() {
       when(mockRemoteDataSource.searchMovies(tQuery))
           .thenThrow(ServerException());
       // act
-      final result = await repository.searchMovies(tQuery);
+      final result = await repository.searchUsecase(tQuery);
       // assert
       expect(result, Left(ServerFailure('')));
     });
@@ -335,7 +335,7 @@ void main() {
       when(mockRemoteDataSource.searchMovies(tQuery))
           .thenThrow(SocketException('Failed to connect to the network'));
       // act
-      final result = await repository.searchMovies(tQuery);
+      final result = await repository.searchUsecase(tQuery);
       // assert
       expect(
           result, Left(ConnectionFailure('Failed to connect to the network')));

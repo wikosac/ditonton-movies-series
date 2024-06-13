@@ -186,7 +186,7 @@ void main() {
           .thenAnswer((_) async => http.Response(
               readJson('dummy_data/search_spiderman_movie.json'), 200));
       // act
-      final result = await dataSource.searchMovies(tQuery);
+      final result = await dataSource.searchUsecase(tQuery);
       // assert
       expect(result, tSearchResult);
     });
@@ -198,7 +198,7 @@ void main() {
               .get(Uri.parse('$BASE_URL/search/movie?$API_KEY&query=$tQuery')))
           .thenAnswer((_) async => http.Response('Not Found', 404));
       // act
-      final call = dataSource.searchMovies(tQuery);
+      final call = dataSource.searchUsecase(tQuery);
       // assert
       expect(() => call, throwsA(isA<ServerException>()));
     });

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/core/utils/constants.dart';
 import 'package:ditonton/movies/presentation/pages/movie_detail_page.dart';
+import 'package:ditonton/search/data/models/search_response.dart';
 import 'package:ditonton/search/domain/entities/search.dart';
 import 'package:flutter/material.dart';
 
@@ -15,11 +16,19 @@ class SearchCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(
-            context,
-            MovieDetailPage.ROUTE_NAME,
-            arguments: search.id,
-          );
+          search.type == MediaType.MOVIE
+              ? Navigator.pushNamed(
+                  context,
+                  MovieDetailPage.ROUTE_NAME,
+                  arguments: search.id,
+                )
+              : search.type == MediaType.TV
+                  ? Navigator.pushNamed(
+                      context,
+                      MovieDetailPage.ROUTE_NAME,
+                      arguments: search.id,
+                    )
+                  : null;
         },
         child: Stack(
           alignment: Alignment.bottomLeft,

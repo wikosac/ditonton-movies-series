@@ -1,4 +1,3 @@
-
 import 'package:ditonton/movies/data/datasources/movie_remote_data_source.dart';
 import 'package:ditonton/movies/data/repositories/movie_repository_impl.dart';
 import 'package:ditonton/movies/domain/repositories/movie_repository.dart';
@@ -11,9 +10,18 @@ import 'package:ditonton/movies/presentation/provider/movie_detail_notifier.dart
 import 'package:ditonton/movies/presentation/provider/movie_list_notifier.dart';
 import 'package:ditonton/movies/presentation/provider/popular_movies_notifier.dart';
 import 'package:ditonton/movies/presentation/provider/top_rated_movies_notifier.dart';
-import 'package:ditonton/search/domain/usecases/search_movies.dart';
+import 'package:ditonton/search/data/repositories/search_repository_impl.dart';
+import 'package:ditonton/search/data/sources/search_data_source.dart';
+import 'package:ditonton/search/domain/repositories/search_repository.dart';
+import 'package:ditonton/search/domain/usecases/search_usecase.dart';
 import 'package:ditonton/search/presentation/provider/movie_search_notifier.dart';
+import 'package:ditonton/tv_series/data/repositories/tv_series_repository_impl.dart';
+import 'package:ditonton/tv_series/data/sources/tv_series_remote_data_source.dart';
+import 'package:ditonton/tv_series/domain/repositories/tv_series_repository.dart';
+import 'package:ditonton/watchlist/data/repositories/watchlist_repository_impl.dart';
 import 'package:ditonton/watchlist/data/sources/database_helper.dart';
+import 'package:ditonton/watchlist/data/sources/watchlist_data_source.dart';
+import 'package:ditonton/watchlist/domain/repositories/watchlist_repository.dart';
 import 'package:ditonton/watchlist/domain/usecases/get_watchlist.dart';
 import 'package:ditonton/watchlist/domain/usecases/get_watchlist_status.dart';
 import 'package:ditonton/watchlist/domain/usecases/remove_watchlist.dart';
@@ -43,8 +51,8 @@ void init() {
     ),
   );
   locator.registerFactory(
-    () => MovieSearchNotifier(
-      searchMovies: locator(),
+    () => SearchNotifier(
+      searchUsecase: locator(),
     ),
   );
   locator.registerFactory(
@@ -69,7 +77,7 @@ void init() {
   locator.registerLazySingleton(() => GetTopRatedMovies(locator()));
   locator.registerLazySingleton(() => GetMovieDetail(locator()));
   locator.registerLazySingleton(() => GetMovieRecommendations(locator()));
-  locator.registerLazySingleton(() => SearchMovies(locator()));
+  locator.registerLazySingleton(() => SearchUseCase(locator()));
   locator.registerLazySingleton(() => GetWatchListStatus(locator()));
   locator.registerLazySingleton(() => SaveWatchlist(locator()));
   locator.registerLazySingleton(() => RemoveWatchlist(locator()));
@@ -77,17 +85,31 @@ void init() {
 
   // repository
   locator.registerLazySingleton<MovieRepository>(
-    () => MovieRepositoryImpl(
-      remoteDataSource: locator(),
-      // localDataSource: locator(),
-    ),
+    () => MovieRepositoryImpl(remoteDataSource: locator()),
+  );
+  locator.registerLazySingleton<SearchRepository>(
+    () => SearchRepositoryImpl(searchDataSource: locator()),
+  );
+  locator.registerLazySingleton<WatchlistRepository>(
+    () => WatchlistRepositoryImpl(watchlistDataSource: locator()),
+  );
+  locator.registerLazySingleton<TvSeriesRepository>(
+    () => TvSeriesRepositoryImpl(tvSeriesRemoteDataSource: locator()),
   );
 
   // data sources
   locator.registerLazySingleton<MovieRemoteDataSource>(
-      () => MovieRemoteDataSourceImpl(client: locator()));
-  // locator.registerLazySingleton<MovieLocalDataSource>(
-  //     () => MovieLocalDataSourceImpl(databaseHelper: locator()));
+    () => MovieRemoteDataSourceImpl(client: locator()),
+  );
+  locator.registerLazySingleton<WatchlistDataSource>(
+    () => WatchlistDataSourceImpl(databaseHelper: locator()),
+  );
+  locator.registerLazySingleton<SearchDataSource>(
+        () => SearchDataSourceImpl(client: locator()),
+  );
+  locator.registerLazySingleton<TvSeriesRemoteDataSource>(
+        () => TvSeriesRemoteDataSourceImpl(),
+  );
 
   // helper
   locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());

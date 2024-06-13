@@ -1,12 +1,7 @@
 import 'package:ditonton/tv_series/data/models/tv_detail_response.dart';
 import 'package:ditonton/tv_series/data/models/tv_response.dart';
-import 'package:http/http.dart' as http;
 
 class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
-  TvSeriesRemoteDataSourceImpl({required this.client});
-
-  final http.Client client;
-
   @override
   Future<TvDetailResponse> getMovieDetail(int id) {
     // TODO: implement getMovieDetail

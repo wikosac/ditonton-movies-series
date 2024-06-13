@@ -40,21 +40,21 @@ class Result {
   final String? backdropPath;
   final int id;
   final String? originalTitle;
-  final String overview;
+  final String? overview;
   final String? posterPath;
-  final MediaType mediaType;
+  final MediaType? mediaType;
   final bool adult;
   final String? title;
-  final String originalLanguage;
+  final String? originalLanguage;
   final List<int>? genreIds;
   final double? popularity;
-  final DateTime? releaseDate;
+  final String? releaseDate;
   final bool? video;
   final double? voteAverage;
   final int? voteCount;
   final String? originalName;
   final String? name;
-  final DateTime? firstAirDate;
+  final String? firstAirDate;
   final List<String>? originCountry;
 
   Result({
@@ -85,7 +85,7 @@ class Result {
         originalTitle: json["original_title"],
         overview: json["overview"],
         posterPath: json["poster_path"],
-        mediaType: mediaTypeValues.map[json["media_type"]]!,
+        mediaType: mediaTypeValues.map[json["media_type"]],
         adult: json["adult"],
         title: json["title"],
         originalLanguage: json["original_language"],
@@ -93,17 +93,13 @@ class Result {
             ? []
             : List<int>.from(json["genre_ids"]!.map((x) => x)),
         popularity: json["popularity"]?.toDouble(),
-        releaseDate: json["release_date"] == null
-            ? null
-            : DateTime.parse(json["release_date"]),
+        releaseDate: json["release_date"],
         video: json["video"],
         voteAverage: json["vote_average"]?.toDouble(),
         voteCount: json["vote_count"],
         originalName: json["original_name"],
         name: json["name"],
-        firstAirDate: json["first_air_date"] == null
-            ? null
-            : DateTime.parse(json["first_air_date"]),
+        firstAirDate: json["first_air_date"],
         originCountry: json["origin_country"] == null
             ? []
             : List<String>.from(json["origin_country"]!.map((x) => x)),
@@ -122,15 +118,13 @@ class Result {
         "genre_ids":
             genreIds == null ? [] : List<dynamic>.from(genreIds!.map((x) => x)),
         "popularity": popularity,
-        "release_date":
-            "${releaseDate!.year.toString().padLeft(4, '0')}-${releaseDate!.month.toString().padLeft(2, '0')}-${releaseDate!.day.toString().padLeft(2, '0')}",
+        "release_date": releaseDate,
         "video": video,
         "vote_average": voteAverage,
         "vote_count": voteCount,
         "original_name": originalName,
         "name": name,
-        "first_air_date":
-            "${firstAirDate!.year.toString().padLeft(4, '0')}-${firstAirDate!.month.toString().padLeft(2, '0')}-${firstAirDate!.day.toString().padLeft(2, '0')}",
+        "first_air_date": firstAirDate,
         "origin_country": originCountry == null
             ? []
             : List<dynamic>.from(originCountry!.map((x) => x)),
@@ -138,9 +132,10 @@ class Result {
 
   Search toSearch() => Search(
         id: id,
-        posterPath: posterPath ?? backdropPath ?? '-',
+        posterPath: backdropPath ?? posterPath,
         title: title ?? name ?? '-',
-        year: releaseDate ?? firstAirDate ?? DateTime(2023),
+        releaseDate: releaseDate ?? firstAirDate,
+        type: mediaType,
       );
 }
 

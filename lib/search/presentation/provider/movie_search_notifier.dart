@@ -1,12 +1,12 @@
 import 'package:ditonton/core/utils/state_enum.dart';
 import 'package:ditonton/search/domain/entities/search.dart';
-import 'package:ditonton/search/domain/usecases/search_movies.dart';
+import 'package:ditonton/search/domain/usecases/search_usecase.dart';
 import 'package:flutter/foundation.dart';
 
-class MovieSearchNotifier extends ChangeNotifier {
-  final SearchMovies searchMovies;
+class SearchNotifier extends ChangeNotifier {
+  final SearchUseCase searchUsecase;
 
-  MovieSearchNotifier({required this.searchMovies});
+  SearchNotifier({required this.searchUsecase});
 
   RequestState _state = RequestState.Empty;
 
@@ -24,7 +24,7 @@ class MovieSearchNotifier extends ChangeNotifier {
     _state = RequestState.Loading;
     notifyListeners();
 
-    final result = await searchMovies.execute(query);
+    final result = await searchUsecase.execute(query);
     result.fold(
       (failure) {
         _message = failure.message;
