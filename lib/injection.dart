@@ -1,5 +1,5 @@
-import 'package:ditonton/movies/data/datasources/movie_remote_data_source.dart';
 import 'package:ditonton/movies/data/repositories/movie_repository_impl.dart';
+import 'package:ditonton/movies/data/sources/movie_remote_data_source.dart';
 import 'package:ditonton/movies/domain/repositories/movie_repository.dart';
 import 'package:ditonton/movies/domain/usecases/get_movie_detail.dart';
 import 'package:ditonton/movies/domain/usecases/get_movie_recommendations.dart';
@@ -18,6 +18,9 @@ import 'package:ditonton/search/presentation/provider/movie_search_notifier.dart
 import 'package:ditonton/tv_series/data/repositories/tv_series_repository_impl.dart';
 import 'package:ditonton/tv_series/data/sources/tv_series_remote_data_source.dart';
 import 'package:ditonton/tv_series/domain/repositories/tv_series_repository.dart';
+import 'package:ditonton/tv_series/domain/usecases/get_tv_series_detail.dart';
+import 'package:ditonton/tv_series/domain/usecases/get_tv_series_recommendations.dart';
+import 'package:ditonton/tv_series/presentation/provider/tv_series_detail_notifier.dart';
 import 'package:ditonton/watchlist/data/repositories/watchlist_repository_impl.dart';
 import 'package:ditonton/watchlist/data/sources/database_helper.dart';
 import 'package:ditonton/watchlist/data/sources/watchlist_data_source.dart';
@@ -51,6 +54,15 @@ void init() {
     ),
   );
   locator.registerFactory(
+    () => TvSeriesDetailNotifier(
+      getTvSeriesDetail: locator(),
+      getTvSeriesRecommendations: locator(),
+      getWatchListStatus: locator(),
+      saveWatchlist: locator(),
+      removeWatchlist: locator(),
+    ),
+  );
+  locator.registerFactory(
     () => SearchNotifier(
       searchUsecase: locator(),
     ),
@@ -77,6 +89,8 @@ void init() {
   locator.registerLazySingleton(() => GetTopRatedMovies(locator()));
   locator.registerLazySingleton(() => GetMovieDetail(locator()));
   locator.registerLazySingleton(() => GetMovieRecommendations(locator()));
+  locator.registerLazySingleton(() => GetTvSeriesDetail(locator()));
+  locator.registerLazySingleton(() => GetTvSeriesRecommendations(locator()));
   locator.registerLazySingleton(() => SearchUseCase(locator()));
   locator.registerLazySingleton(() => GetWatchListStatus(locator()));
   locator.registerLazySingleton(() => SaveWatchlist(locator()));
@@ -105,10 +119,10 @@ void init() {
     () => WatchlistDataSourceImpl(databaseHelper: locator()),
   );
   locator.registerLazySingleton<SearchDataSource>(
-        () => SearchDataSourceImpl(client: locator()),
+    () => SearchDataSourceImpl(client: locator()),
   );
   locator.registerLazySingleton<TvSeriesRemoteDataSource>(
-        () => TvSeriesRemoteDataSourceImpl(),
+    () => TvSeriesRemoteDataSourceImpl(client: locator()),
   );
 
   // helper

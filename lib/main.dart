@@ -5,12 +5,14 @@ import 'package:ditonton/movies/presentation/pages/about_page.dart';
 import 'package:ditonton/movies/presentation/pages/home_movie_page.dart';
 import 'package:ditonton/movies/presentation/pages/movie_detail_page.dart';
 import 'package:ditonton/movies/presentation/pages/popular_movies_page.dart';
-import 'package:ditonton/search/presentation/pages/search_page.dart';
 import 'package:ditonton/movies/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/movies/presentation/provider/movie_detail_notifier.dart';
 import 'package:ditonton/movies/presentation/provider/movie_list_notifier.dart';
 import 'package:ditonton/movies/presentation/provider/popular_movies_notifier.dart';
 import 'package:ditonton/movies/presentation/provider/top_rated_movies_notifier.dart';
+import 'package:ditonton/search/presentation/pages/search_page.dart';
+import 'package:ditonton/tv_series/presentation/pages/tv_series_detail_page.dart';
+import 'package:ditonton/tv_series/presentation/provider/tv_series_detail_notifier.dart';
 import 'package:ditonton/watchlist/presentation/pages/watchlist_page.dart';
 import 'package:ditonton/watchlist/presentation/provider/watchlist_notifier.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,6 +36,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<MovieDetailNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TvSeriesDetailNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<SearchNotifier>(),
@@ -70,6 +75,12 @@ class MyApp extends StatelessWidget {
               final id = settings.arguments as int;
               return MaterialPageRoute(
                 builder: (_) => MovieDetailPage(id: id),
+                settings: settings,
+              );
+            case TvSeriesDetailPage.ROUTE_NAME:
+              final id = settings.arguments as int;
+              return MaterialPageRoute(
+                builder: (_) => TvSeriesDetailPage(id: id),
                 settings: settings,
               );
             case SearchPage.ROUTE_NAME:

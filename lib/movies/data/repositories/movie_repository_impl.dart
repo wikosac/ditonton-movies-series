@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/core/errors/exception.dart';
 import 'package:ditonton/core/errors/failure.dart';
-import 'package:ditonton/movies/data/datasources/movie_remote_data_source.dart';
+import 'package:ditonton/movies/data/sources/movie_remote_data_source.dart';
 import 'package:ditonton/movies/domain/entities/movie.dart';
 import 'package:ditonton/movies/domain/entities/movie_detail.dart';
 import 'package:ditonton/movies/domain/repositories/movie_repository.dart';

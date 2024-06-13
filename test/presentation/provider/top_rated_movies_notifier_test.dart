@@ -19,7 +19,7 @@ void main() {
   setUp(() {
     listenerCallCount = 0;
     mockGetTopRatedMovies = MockGetTopRatedMovies();
-    notifier = TopRatedMoviesNotifier(getTopRatedMovies: mockGetTopRatedMovies)
+    notifier = TopRatedMoviesNotifier(getTopRatedTvSeries: mockGetTopRatedMovies)
       ..addListener(() {
         listenerCallCount++;
       });

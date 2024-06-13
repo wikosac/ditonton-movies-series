@@ -1,3 +1,4 @@
+import 'package:ditonton/watchlist/domain/entities/watchlist.dart';
 import 'package:equatable/equatable.dart';
 
 class TvSeriesDetail extends Equatable {
@@ -7,32 +8,37 @@ class TvSeriesDetail extends Equatable {
     required this.year,
     required this.seasonCount,
     required this.lang,
-    required this.image,
+    required this.posterPath,
     required this.genres,
     required this.overview,
     required this.seasons,
   });
 
-  final String id;
+  final int id;
   final String title;
   final String year;
-  final String seasonCount;
-  final String lang;
-  final String image;
-  final String genres;
+  final int seasonCount;
+  final List<String> lang;
+  final String posterPath;
+  final List<String> genres;
   final String overview;
-  final List<Season> seasons;
+  final List<SeasonEntity> seasons;
+
+  Watchlist toWatchlist() => Watchlist(
+        id: id,
+        posterPath: posterPath,
+      );
 
   @override
   List<Object?> get props => [id];
 }
 
-class Season extends Equatable {
+class SeasonEntity extends Equatable {
   final int id;
   final String name;
   final int seasonNumber;
 
-  Season({
+  SeasonEntity({
     required this.id,
     required this.name,
     required this.seasonNumber,

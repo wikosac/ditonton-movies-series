@@ -73,7 +73,7 @@ void main() {
       when(mockRemoteDataSource.getNowPlayingMovies())
           .thenAnswer((_) async => tMovieModelList);
       // act
-      final result = await repository.getNowPlayingMovies();
+      final result = await repository.getNowPlayingTvSeries();
       // assert
       verify(mockRemoteDataSource.getNowPlayingMovies());
       /* workaround to test List in Right. Issue: https://github.com/spebbe/dartz/issues/80 */
@@ -88,7 +88,7 @@ void main() {
       when(mockRemoteDataSource.getNowPlayingMovies())
           .thenThrow(ServerException());
       // act
-      final result = await repository.getNowPlayingMovies();
+      final result = await repository.getNowPlayingTvSeries();
       // assert
       verify(mockRemoteDataSource.getNowPlayingMovies());
       expect(result, equals(Left(ServerFailure(''))));
@@ -101,7 +101,7 @@ void main() {
       when(mockRemoteDataSource.getNowPlayingMovies())
           .thenThrow(SocketException('Failed to connect to the network'));
       // act
-      final result = await repository.getNowPlayingMovies();
+      final result = await repository.getNowPlayingTvSeries();
       // assert
       verify(mockRemoteDataSource.getNowPlayingMovies());
       expect(result,
@@ -116,7 +116,7 @@ void main() {
       when(mockRemoteDataSource.getPopularMovies())
           .thenAnswer((_) async => tMovieModelList);
       // act
-      final result = await repository.getPopularMovies();
+      final result = await repository.getPopularTvSeries();
       // assert
       /* workaround to test List in Right. Issue: https://github.com/spebbe/dartz/issues/80 */
       final resultList = result.getOrElse(() => []);
@@ -130,7 +130,7 @@ void main() {
       when(mockRemoteDataSource.getPopularMovies())
           .thenThrow(ServerException());
       // act
-      final result = await repository.getPopularMovies();
+      final result = await repository.getPopularTvSeries();
       // assert
       expect(result, Left(ServerFailure('')));
     });
@@ -142,7 +142,7 @@ void main() {
       when(mockRemoteDataSource.getPopularMovies())
           .thenThrow(SocketException('Failed to connect to the network'));
       // act
-      final result = await repository.getPopularMovies();
+      final result = await repository.getPopularTvSeries();
       // assert
       expect(
           result, Left(ConnectionFailure('Failed to connect to the network')));
@@ -156,7 +156,7 @@ void main() {
       when(mockRemoteDataSource.getTopRatedMovies())
           .thenAnswer((_) async => tMovieModelList);
       // act
-      final result = await repository.getTopRatedMovies();
+      final result = await repository.getTopRatedTvSeries();
       // assert
       /* workaround to test List in Right. Issue: https://github.com/spebbe/dartz/issues/80 */
       final resultList = result.getOrElse(() => []);
@@ -169,7 +169,7 @@ void main() {
       when(mockRemoteDataSource.getTopRatedMovies())
           .thenThrow(ServerException());
       // act
-      final result = await repository.getTopRatedMovies();
+      final result = await repository.getTopRatedTvSeries();
       // assert
       expect(result, Left(ServerFailure('')));
     });
@@ -181,7 +181,7 @@ void main() {
       when(mockRemoteDataSource.getTopRatedMovies())
           .thenThrow(SocketException('Failed to connect to the network'));
       // act
-      final result = await repository.getTopRatedMovies();
+      final result = await repository.getTopRatedTvSeries();
       // assert
       expect(
           result, Left(ConnectionFailure('Failed to connect to the network')));
@@ -221,7 +221,7 @@ void main() {
       when(mockRemoteDataSource.getMovieDetail(tId))
           .thenAnswer((_) async => tMovieResponse);
       // act
-      final result = await repository.getMovieDetail(tId);
+      final result = await repository.getTvSeriesDetail(tId);
       // assert
       verify(mockRemoteDataSource.getMovieDetail(tId));
       expect(result, equals(Right(testMovieDetail)));
@@ -234,7 +234,7 @@ void main() {
       when(mockRemoteDataSource.getMovieDetail(tId))
           .thenThrow(ServerException());
       // act
-      final result = await repository.getMovieDetail(tId);
+      final result = await repository.getTvSeriesDetail(tId);
       // assert
       verify(mockRemoteDataSource.getMovieDetail(tId));
       expect(result, equals(Left(ServerFailure(''))));
@@ -247,7 +247,7 @@ void main() {
       when(mockRemoteDataSource.getMovieDetail(tId))
           .thenThrow(SocketException('Failed to connect to the network'));
       // act
-      final result = await repository.getMovieDetail(tId);
+      final result = await repository.getTvSeriesDetail(tId);
       // assert
       verify(mockRemoteDataSource.getMovieDetail(tId));
       expect(result,
@@ -265,7 +265,7 @@ void main() {
       when(mockRemoteDataSource.getMovieRecommendations(tId))
           .thenAnswer((_) async => tMovieList);
       // act
-      final result = await repository.getMovieRecommendations(tId);
+      final result = await repository.getTvSeriesRecommendations(tId);
       // assert
       verify(mockRemoteDataSource.getMovieRecommendations(tId));
       /* workaround to test List in Right. Issue: https://github.com/spebbe/dartz/issues/80 */
@@ -280,7 +280,7 @@ void main() {
       when(mockRemoteDataSource.getMovieRecommendations(tId))
           .thenThrow(ServerException());
       // act
-      final result = await repository.getMovieRecommendations(tId);
+      final result = await repository.getTvSeriesRecommendations(tId);
       // assertbuild runner
       verify(mockRemoteDataSource.getMovieRecommendations(tId));
       expect(result, equals(Left(ServerFailure(''))));
@@ -293,7 +293,7 @@ void main() {
       when(mockRemoteDataSource.getMovieRecommendations(tId))
           .thenThrow(SocketException('Failed to connect to the network'));
       // act
-      final result = await repository.getMovieRecommendations(tId);
+      final result = await repository.getTvSeriesRecommendations(tId);
       // assert
       verify(mockRemoteDataSource.getMovieRecommendations(tId));
       expect(result,

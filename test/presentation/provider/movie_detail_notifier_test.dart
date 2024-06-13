@@ -39,8 +39,8 @@ void main() {
     mockSaveWatchlist = MockSaveWatchlist();
     mockRemoveWatchlist = MockRemoveWatchlist();
     provider = MovieDetailNotifier(
-      getMovieDetail: mockGetMovieDetail,
-      getMovieRecommendations: mockGetMovieRecommendations,
+      getTvSeriesDetail: mockGetMovieDetail,
+      getTvSeriesRecommendations: mockGetMovieRecommendations,
       getWatchListStatus: mockGetWatchlistStatus,
       saveWatchlist: mockSaveWatchlist,
       removeWatchlist: mockRemoveWatchlist,
@@ -92,7 +92,7 @@ void main() {
       // act
       provider.fetchMovieDetail(tId);
       // assert
-      expect(provider.movieState, RequestState.Loading);
+      expect(provider.detailState, RequestState.Loading);
       expect(listenerCallCount, 1);
     });
 
@@ -102,8 +102,8 @@ void main() {
       // act
       await provider.fetchMovieDetail(tId);
       // assert
-      expect(provider.movieState, RequestState.Loaded);
-      expect(provider.movie, testMovieDetail);
+      expect(provider.detailState, RequestState.Loaded);
+      expect(provider.series, testMovieDetail);
       expect(listenerCallCount, 3);
     });
 
@@ -114,7 +114,7 @@ void main() {
       // act
       await provider.fetchMovieDetail(tId);
       // assert
-      expect(provider.movieState, RequestState.Loaded);
+      expect(provider.detailState, RequestState.Loaded);
       expect(provider.movieRecommendations, tMovies);
     });
   });
@@ -228,7 +228,7 @@ void main() {
       // act
       await provider.fetchMovieDetail(tId);
       // assert
-      expect(provider.movieState, RequestState.Error);
+      expect(provider.detailState, RequestState.Error);
       expect(provider.message, 'Server Failure');
       expect(listenerCallCount, 2);
     });

@@ -3,6 +3,7 @@ import 'package:ditonton/core/utils/constants.dart';
 import 'package:ditonton/movies/presentation/pages/movie_detail_page.dart';
 import 'package:ditonton/search/data/models/search_response.dart';
 import 'package:ditonton/search/domain/entities/search.dart';
+import 'package:ditonton/tv_series/presentation/pages/tv_series_detail_page.dart';
 import 'package:flutter/material.dart';
 
 class SearchCard extends StatelessWidget {
@@ -25,7 +26,7 @@ class SearchCard extends StatelessWidget {
               : search.type == MediaType.TV
                   ? Navigator.pushNamed(
                       context,
-                      MovieDetailPage.ROUTE_NAME,
+                      TvSeriesDetailPage.ROUTE_NAME,
                       arguments: search.id,
                     )
                   : null;

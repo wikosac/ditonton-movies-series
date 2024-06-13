@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:ditonton/core/errors/exception.dart';
 import 'package:ditonton/core/utils/constants.dart';
 import 'package:ditonton/movies/data/models/movie_detail_model.dart';

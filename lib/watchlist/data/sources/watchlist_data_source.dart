@@ -1,3 +1,4 @@
+import 'package:ditonton/core/utils/constants.dart';
 import 'package:ditonton/watchlist/data/models/watchlist_table.dart';
 import 'package:ditonton/watchlist/data/sources/database_helper.dart';
 
@@ -31,7 +32,7 @@ class WatchlistDataSourceImpl implements WatchlistDataSource {
     try {
       final result = await databaseHelper.insertWatchlist(watchlistTable);
       if (result != 0) {
-        return 'Success';
+        return WATCHLIST_ADD_MESSAGE;
       } else {
         return 'Failed';
       }
@@ -45,7 +46,7 @@ class WatchlistDataSourceImpl implements WatchlistDataSource {
     try {
       final result = await databaseHelper.removeWatchlist(id);
       if (result != 0){
-        return 'Success';
+        return WATCHLIST_REMOVE_MESSAGE;
       } else {
         return 'Failed';
       }

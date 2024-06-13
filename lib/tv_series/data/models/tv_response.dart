@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:ditonton/tv_series/domain/entities/tv_series.dart';
+
 TvResponse tvResponseFromJson(String str) =>
     TvResponse.fromJson(json.decode(str));
 
@@ -101,4 +103,9 @@ class Result {
         "vote_average": voteAverage,
         "vote_count": voteCount,
       };
+
+  TvSeries toEntity() => TvSeries(
+        id: id,
+        posterPath: posterPath,
+      );
 }

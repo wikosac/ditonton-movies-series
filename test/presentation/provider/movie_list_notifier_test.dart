@@ -26,9 +26,9 @@ void main() {
     mockGetPopularMovies = MockGetPopularMovies();
     mockGetTopRatedMovies = MockGetTopRatedMovies();
     provider = MovieListNotifier(
-      getNowPlayingMovies: mockGetNowPlayingMovies,
-      getPopularMovies: mockGetPopularMovies,
-      getTopRatedMovies: mockGetTopRatedMovies,
+      getNowPlayingTvSeries: mockGetNowPlayingMovies,
+      getPopularTvSeries: mockGetPopularMovies,
+      getTopRatedTvSeries: mockGetTopRatedMovies,
     )..addListener(() {
         listenerCallCount += 1;
       });

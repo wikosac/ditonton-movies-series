@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:ditonton/tv_series/domain/entities/tv_series_detail.dart';
+
 TvDetailResponse tvDetailResponseFromJson(String str) =>
     TvDetailResponse.fromJson(json.decode(str));
 
@@ -11,13 +13,13 @@ class TvDetailResponse {
   final String backdropPath;
   final List<CreatedBy> createdBy;
   final List<int> episodeRunTime;
-  final DateTime firstAirDate;
+  final String firstAirDate;
   final List<Genre> genres;
   final String homepage;
   final int id;
   final bool inProduction;
   final List<String> languages;
-  final DateTime lastAirDate;
+  final String lastAirDate;
   final LastEpisodeToAir lastEpisodeToAir;
   final String name;
   final dynamic nextEpisodeToAir;
@@ -82,13 +84,13 @@ class TvDetailResponse {
         createdBy: List<CreatedBy>.from(
             json["created_by"].map((x) => CreatedBy.fromJson(x))),
         episodeRunTime: List<int>.from(json["episode_run_time"].map((x) => x)),
-        firstAirDate: DateTime.parse(json["first_air_date"]),
+        firstAirDate: json["first_air_date"],
         genres: List<Genre>.from(json["genres"].map((x) => Genre.fromJson(x))),
         homepage: json["homepage"],
         id: json["id"],
         inProduction: json["in_production"],
         languages: List<String>.from(json["languages"].map((x) => x)),
-        lastAirDate: DateTime.parse(json["last_air_date"]),
+        lastAirDate: json["last_air_date"],
         lastEpisodeToAir:
             LastEpisodeToAir.fromJson(json["last_episode_to_air"]),
         name: json["name"],
@@ -124,15 +126,13 @@ class TvDetailResponse {
         "backdrop_path": backdropPath,
         "created_by": List<dynamic>.from(createdBy.map((x) => x.toJson())),
         "episode_run_time": List<dynamic>.from(episodeRunTime.map((x) => x)),
-        "first_air_date":
-            "${firstAirDate.year.toString().padLeft(4, '0')}-${firstAirDate.month.toString().padLeft(2, '0')}-${firstAirDate.day.toString().padLeft(2, '0')}",
+        "first_air_date": firstAirDate,
         "genres": List<dynamic>.from(genres.map((x) => x.toJson())),
         "homepage": homepage,
         "id": id,
         "in_production": inProduction,
         "languages": List<dynamic>.from(languages.map((x) => x)),
-        "last_air_date":
-            "${lastAirDate.year.toString().padLeft(4, '0')}-${lastAirDate.month.toString().padLeft(2, '0')}-${lastAirDate.day.toString().padLeft(2, '0')}",
+        "last_air_date": lastAirDate,
         "last_episode_to_air": lastEpisodeToAir.toJson(),
         "name": name,
         "next_episode_to_air": nextEpisodeToAir,
@@ -158,6 +158,18 @@ class TvDetailResponse {
         "vote_average": voteAverage,
         "vote_count": voteCount,
       };
+
+  TvSeriesDetail toEntity() => TvSeriesDetail(
+        id: id,
+        title: name,
+        year: firstAirDate,
+        seasonCount: seasons.length,
+        lang: languages,
+        posterPath: posterPath,
+        genres: genres.map((item) => item.name).toList(),
+        overview: overview,
+        seasons: seasons.map((item) => item.toEntity()).toList(),
+      );
 }
 
 class CreatedBy {
@@ -166,7 +178,7 @@ class CreatedBy {
   final String name;
   final String originalName;
   final int gender;
-  final String profilePath;
+  final String? profilePath;
 
   CreatedBy({
     required this.id,
@@ -337,7 +349,7 @@ class Season {
   final int id;
   final String name;
   final String overview;
-  final String posterPath;
+  final String? posterPath;
   final int seasonNumber;
   final double voteAverage;
 
@@ -374,6 +386,12 @@ class Season {
         "season_number": seasonNumber,
         "vote_average": voteAverage,
       };
+
+  SeasonEntity toEntity() => SeasonEntity(
+        id: id,
+        name: name,
+        seasonNumber: seasonNumber,
+      );
 }
 
 class SpokenLanguage {
