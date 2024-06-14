@@ -13,6 +13,7 @@ import 'package:ditonton/movies/presentation/provider/top_rated_movies_notifier.
 import 'package:ditonton/search/presentation/pages/search_page.dart';
 import 'package:ditonton/tv_series/presentation/pages/tv_series_detail_page.dart';
 import 'package:ditonton/tv_series/presentation/provider/tv_series_detail_notifier.dart';
+import 'package:ditonton/tv_series/presentation/provider/tv_series_list_provider.dart';
 import 'package:ditonton/watchlist/presentation/pages/watchlist_page.dart';
 import 'package:ditonton/watchlist/presentation/provider/watchlist_notifier.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<MovieDetailNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TvSeriesListProvider>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TvSeriesDetailNotifier>(),

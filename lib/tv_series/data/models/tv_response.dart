@@ -46,7 +46,7 @@ class Result {
   final String originalName;
   final String overview;
   final double popularity;
-  final String posterPath;
+  final String? posterPath;
   final DateTime firstAirDate;
   final String name;
   final double voteAverage;
@@ -106,6 +106,6 @@ class Result {
 
   TvSeries toEntity() => TvSeries(
         id: id,
-        posterPath: posterPath,
+        posterPath: posterPath ?? '',
       );
 }

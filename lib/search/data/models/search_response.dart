@@ -132,7 +132,7 @@ class Result {
 
   Search toSearch() => Search(
         id: id,
-        posterPath: backdropPath ?? posterPath,
+        posterPath: backdropPath ?? posterPath ?? '',
         title: title ?? name ?? '-',
         releaseDate: releaseDate ?? firstAirDate,
         type: mediaType,

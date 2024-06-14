@@ -1,3 +1,4 @@
+import 'package:ditonton/tv_series/domain/entities/tv_series.dart';
 import 'package:equatable/equatable.dart';
 
 class Movie extends Equatable {
@@ -37,6 +38,11 @@ class Movie extends Equatable {
   bool? video;
   double? voteAverage;
   int? voteCount;
+
+  TvSeries toEntity() => TvSeries(
+        id: id,
+        posterPath: posterPath ?? '',
+      );
 
   @override
   List<Object?> get props => [
