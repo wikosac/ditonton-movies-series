@@ -38,7 +38,7 @@ class TvResponse {
 
 class Result {
   final bool adult;
-  final String backdropPath;
+  final String? backdropPath;
   final List<int> genreIds;
   final int id;
   final List<String> originCountry;

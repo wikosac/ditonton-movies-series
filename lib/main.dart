@@ -11,9 +11,13 @@ import 'package:ditonton/movies/presentation/provider/movie_list_notifier.dart';
 import 'package:ditonton/movies/presentation/provider/popular_movies_notifier.dart';
 import 'package:ditonton/movies/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:ditonton/search/presentation/pages/search_page.dart';
+import 'package:ditonton/tv_series/presentation/pages/popular_tv_series_page.dart';
+import 'package:ditonton/tv_series/presentation/pages/top_rated_tv_series_page.dart';
 import 'package:ditonton/tv_series/presentation/pages/tv_series_detail_page.dart';
+import 'package:ditonton/tv_series/presentation/provider/popular_tv_series_notifier.dart';
+import 'package:ditonton/tv_series/presentation/provider/top_rated_tv_series_notifier.dart';
 import 'package:ditonton/tv_series/presentation/provider/tv_series_detail_notifier.dart';
-import 'package:ditonton/tv_series/presentation/provider/tv_series_list_provider.dart';
+import 'package:ditonton/tv_series/presentation/provider/tv_series_list_notifier.dart';
 import 'package:ditonton/watchlist/presentation/pages/watchlist_page.dart';
 import 'package:ditonton/watchlist/presentation/provider/watchlist_notifier.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,7 +43,7 @@ class MyApp extends StatelessWidget {
           create: (_) => di.locator<MovieDetailNotifier>(),
         ),
         ChangeNotifierProvider(
-          create: (_) => di.locator<TvSeriesListProvider>(),
+          create: (_) => di.locator<TvSeriesListNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TvSeriesDetailNotifier>(),
@@ -52,6 +56,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<PopularMoviesNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TopRatedTvSeriesNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<PopularTvSeriesNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistNotifier>(),
@@ -81,6 +91,10 @@ class MyApp extends StatelessWidget {
                 builder: (_) => MovieDetailPage(id: id),
                 settings: settings,
               );
+            case PopularTvSeriesPage.ROUTE_NAME:
+              return CupertinoPageRoute(builder: (_) => PopularTvSeriesPage());
+            case TopRatedTvSeriesPage.ROUTE_NAME:
+              return CupertinoPageRoute(builder: (_) => TopRatedTvSeriesPage());
             case TvSeriesDetailPage.ROUTE_NAME:
               final id = settings.arguments as int;
               return MaterialPageRoute(

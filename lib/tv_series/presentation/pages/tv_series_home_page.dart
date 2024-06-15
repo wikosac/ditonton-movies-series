@@ -2,8 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/core/utils/constants.dart';
 import 'package:ditonton/core/utils/state_enum.dart';
 import 'package:ditonton/tv_series/domain/entities/tv_series.dart';
+import 'package:ditonton/tv_series/presentation/pages/popular_tv_series_page.dart';
+import 'package:ditonton/tv_series/presentation/pages/top_rated_tv_series_page.dart';
 import 'package:ditonton/tv_series/presentation/pages/tv_series_detail_page.dart';
-import 'package:ditonton/tv_series/presentation/provider/tv_series_list_provider.dart';
+import 'package:ditonton/tv_series/presentation/provider/tv_series_list_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +21,7 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
   void initState() {
     super.initState();
     Future.microtask(
-            () => Provider.of<TvSeriesListProvider>(context, listen: false)
+            () => Provider.of<TvSeriesListNotifier>(context, listen: false)
           ..fetchNowPlayingTvSeries()
           ..fetchPopularTvSeries()
           ..fetchTopRatedTvSeries());
@@ -37,7 +39,7 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
               'Now Playing',
               style: kHeading6,
             ),
-            Consumer<TvSeriesListProvider>(builder: (context, data, child) {
+            Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
               final state = data.nowPlayingState;
               if (state == RequestState.Loading) {
                 return Center(
@@ -52,9 +54,9 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
             _buildSubHeading(
               title: 'Popular',
               onTap: () =>
-                  Navigator.pushNamed(context, 'PopularTvSeriesPage.ROUTE_NAME'),
+                  Navigator.pushNamed(context, PopularTvSeriesPage.ROUTE_NAME),
             ),
-            Consumer<TvSeriesListProvider>(builder: (context, data, child) {
+            Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
               final state = data.popularTvSeriesState;
               if (state == RequestState.Loading) {
                 return Center(
@@ -69,9 +71,9 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
             _buildSubHeading(
               title: 'Top Rated',
               onTap: () =>
-                  Navigator.pushNamed(context, 'TopRatedTvSeriesPage.ROUTE_NAME'),
+                  Navigator.pushNamed(context, TopRatedTvSeriesPage.ROUTE_NAME),
             ),
-            Consumer<TvSeriesListProvider>(builder: (context, data, child) {
+            Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
               final state = data.topRatedTvSeriesState;
               if (state == RequestState.Loading) {
                 return Center(
@@ -113,9 +115,9 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
 }
 
 class TvSeriesList extends StatelessWidget {
-  final List<TvSeries> movies;
+  final List<TvSeries> series;
 
-  TvSeriesList(this.movies);
+  TvSeriesList(this.series);
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +126,7 @@ class TvSeriesList extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          final movie = movies[index];
+          final data = series[index];
           return Container(
             padding: const EdgeInsets.all(8),
             child: InkWell(
@@ -132,13 +134,13 @@ class TvSeriesList extends StatelessWidget {
                 Navigator.pushNamed(
                   context,
                   TvSeriesDetailPage.ROUTE_NAME,
-                  arguments: movie.id,
+                  arguments: data.id,
                 );
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                  imageUrl: '$BASE_IMAGE_URL${data.posterPath}',
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(),
                   ),
@@ -148,7 +150,7 @@ class TvSeriesList extends StatelessWidget {
             ),
           );
         },
-        itemCount: movies.length,
+        itemCount: series.length,
       ),
     );
   }

@@ -5,8 +5,8 @@ import 'package:ditonton/tv_series/domain/usecases/get_now_playing_tv_series.dar
 import 'package:ditonton/tv_series/domain/usecases/get_top_rated_tv_series.dart';
 import 'package:flutter/cupertino.dart';
 
-class TvSeriesListProvider extends ChangeNotifier {
-  TvSeriesListProvider({
+class TvSeriesListNotifier extends ChangeNotifier {
+  TvSeriesListNotifier({
     required this.getNowPlayingTvSeries,
     required this.getPopularTvSeries,
     required this.getTopRatedTvSeries,

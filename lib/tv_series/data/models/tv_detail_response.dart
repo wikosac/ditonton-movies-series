@@ -238,10 +238,10 @@ class LastEpisodeToAir {
   final int episodeNumber;
   final String episodeType;
   final String productionCode;
-  final int runtime;
+  final int? runtime;
   final int seasonNumber;
   final int showId;
-  final String stillPath;
+  final String? stillPath;
 
   LastEpisodeToAir({
     required this.id,
@@ -296,7 +296,7 @@ class LastEpisodeToAir {
 
 class Network {
   final int id;
-  final String logoPath;
+  final String? logoPath;
   final String name;
   final String originCountry;
 
@@ -344,7 +344,7 @@ class ProductionCountry {
 }
 
 class Season {
-  final DateTime airDate;
+  final DateTime? airDate;
   final int episodeCount;
   final int id;
   final String name;
@@ -365,7 +365,9 @@ class Season {
   });
 
   factory Season.fromJson(Map<String, dynamic> json) => Season(
-        airDate: DateTime.parse(json["air_date"]),
+        airDate: json["air_date"] != null
+            ? DateTime.parse(json["air_date"])
+            : null,
         episodeCount: json["episode_count"],
         id: json["id"],
         name: json["name"],
@@ -376,8 +378,9 @@ class Season {
       );
 
   Map<String, dynamic> toJson() => {
-        "air_date":
-            "${airDate.year.toString().padLeft(4, '0')}-${airDate.month.toString().padLeft(2, '0')}-${airDate.day.toString().padLeft(2, '0')}",
+        "air_date": airDate == null
+            ? null
+            : "${airDate?.year.toString().padLeft(4, '0')}-${airDate?.month.toString().padLeft(2, '0')}-${airDate?.day.toString().padLeft(2, '0')}",
         "episode_count": episodeCount,
         "id": id,
         "name": name,
