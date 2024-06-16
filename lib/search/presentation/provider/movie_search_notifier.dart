@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 class SearchNotifier extends ChangeNotifier {
   final SearchUseCase searchUsecase;
 
-  SearchNotifier({required this.searchUsecase});
+  SearchNotifier(this.searchUsecase);
 
   RequestState _state = RequestState.Empty;
 

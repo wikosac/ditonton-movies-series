@@ -1,19 +1,22 @@
 import 'dart:convert';
 
-SeasonResponse seasonResponseFromJson(String str) => SeasonResponse.fromJson(json.decode(str));
+import 'package:ditonton/tv_series/domain/entities/episode.dart';
+
+SeasonResponse seasonResponseFromJson(String str) =>
+    SeasonResponse.fromJson(json.decode(str));
 
 String seasonResponseToJson(SeasonResponse data) => json.encode(data.toJson());
 
 class SeasonResponse {
   final String id;
   final DateTime airDate;
-  final List<Episode> episodes;
+  final List<EpisodeModel> episodes;
   final String name;
   final String overview;
   final int seasonResponseId;
-  final String posterPath;
+  final String? posterPath;
   final int seasonNumber;
-  final int voteAverage;
+  final double voteAverage;
 
   SeasonResponse({
     required this.id,
@@ -28,48 +31,50 @@ class SeasonResponse {
   });
 
   factory SeasonResponse.fromJson(Map<String, dynamic> json) => SeasonResponse(
-    id: json["_id"],
-    airDate: DateTime.parse(json["air_date"]),
-    episodes: List<Episode>.from(json["episodes"].map((x) => Episode.fromJson(x))),
-    name: json["name"],
-    overview: json["overview"],
-    seasonResponseId: json["id"],
-    posterPath: json["poster_path"],
-    seasonNumber: json["season_number"],
-    voteAverage: json["vote_average"],
-  );
+        id: json["_id"],
+        airDate: DateTime.parse(json["air_date"]),
+        episodes: List<EpisodeModel>.from(
+            json["episodes"].map((x) => EpisodeModel.fromJson(x))),
+        name: json["name"],
+        overview: json["overview"],
+        seasonResponseId: json["id"],
+        posterPath: json["poster_path"],
+        seasonNumber: json["season_number"],
+        voteAverage: json["vote_average"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "_id": id,
-    "air_date": "${airDate.year.toString().padLeft(4, '0')}-${airDate.month.toString().padLeft(2, '0')}-${airDate.day.toString().padLeft(2, '0')}",
-    "episodes": List<dynamic>.from(episodes.map((x) => x.toJson())),
-    "name": name,
-    "overview": overview,
-    "id": seasonResponseId,
-    "poster_path": posterPath,
-    "season_number": seasonNumber,
-    "vote_average": voteAverage,
-  };
+        "_id": id,
+        "air_date":
+            "${airDate.year.toString().padLeft(4, '0')}-${airDate.month.toString().padLeft(2, '0')}-${airDate.day.toString().padLeft(2, '0')}",
+        "episodes": List<dynamic>.from(episodes.map((x) => x.toJson())),
+        "name": name,
+        "overview": overview,
+        "id": seasonResponseId,
+        "poster_path": posterPath,
+        "season_number": seasonNumber,
+        "vote_average": voteAverage,
+      };
 }
 
-class Episode {
-  final DateTime airDate;
+class EpisodeModel {
+  final String? airDate;
   final int episodeNumber;
   final String episodeType;
   final int id;
   final String name;
   final String overview;
   final String productionCode;
-  final int runtime;
+  final int? runtime;
   final int seasonNumber;
   final int showId;
-  final String stillPath;
+  final String? stillPath;
   final double voteAverage;
   final int voteCount;
   final List<Crew> crew;
   final List<Crew> guestStars;
 
-  Episode({
+  EpisodeModel({
     required this.airDate,
     required this.episodeNumber,
     required this.episodeType,
@@ -87,41 +92,52 @@ class Episode {
     required this.guestStars,
   });
 
-  factory Episode.fromJson(Map<String, dynamic> json) => Episode(
-    airDate: DateTime.parse(json["air_date"]),
-    episodeNumber: json["episode_number"],
-    episodeType: json["episode_type"],
-    id: json["id"],
-    name: json["name"],
-    overview: json["overview"],
-    productionCode: json["production_code"],
-    runtime: json["runtime"],
-    seasonNumber: json["season_number"],
-    showId: json["show_id"],
-    stillPath: json["still_path"],
-    voteAverage: json["vote_average"]?.toDouble(),
-    voteCount: json["vote_count"],
-    crew: List<Crew>.from(json["crew"].map((x) => Crew.fromJson(x))),
-    guestStars: List<Crew>.from(json["guest_stars"].map((x) => Crew.fromJson(x))),
-  );
+  factory EpisodeModel.fromJson(Map<String, dynamic> json) => EpisodeModel(
+        airDate: json["air_date"],
+        episodeNumber: json["episode_number"],
+        episodeType: json["episode_type"],
+        id: json["id"],
+        name: json["name"],
+        overview: json["overview"],
+        productionCode: json["production_code"],
+        runtime: json["runtime"],
+        seasonNumber: json["season_number"],
+        showId: json["show_id"],
+        stillPath: json["still_path"],
+        voteAverage: json["vote_average"]?.toDouble(),
+        voteCount: json["vote_count"],
+        crew: List<Crew>.from(json["crew"].map((x) => Crew.fromJson(x))),
+        guestStars:
+            List<Crew>.from(json["guest_stars"].map((x) => Crew.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "air_date": "${airDate.year.toString().padLeft(4, '0')}-${airDate.month.toString().padLeft(2, '0')}-${airDate.day.toString().padLeft(2, '0')}",
-    "episode_number": episodeNumber,
-    "episode_type": episodeType,
-    "id": id,
-    "name": name,
-    "overview": overview,
-    "production_code": productionCode,
-    "runtime": runtime,
-    "season_number": seasonNumber,
-    "show_id": showId,
-    "still_path": stillPath,
-    "vote_average": voteAverage,
-    "vote_count": voteCount,
-    "crew": List<dynamic>.from(crew.map((x) => x.toJson())),
-    "guest_stars": List<dynamic>.from(guestStars.map((x) => x.toJson())),
-  };
+        "air_date": airDate,
+        "episode_number": episodeNumber,
+        "episode_type": episodeType,
+        "id": id,
+        "name": name,
+        "overview": overview,
+        "production_code": productionCode,
+        "runtime": runtime,
+        "season_number": seasonNumber,
+        "show_id": showId,
+        "still_path": stillPath,
+        "vote_average": voteAverage,
+        "vote_count": voteCount,
+        "crew": List<dynamic>.from(crew.map((x) => x.toJson())),
+        "guest_stars": List<dynamic>.from(guestStars.map((x) => x.toJson())),
+      };
+
+  Episode toEntity() => Episode(
+        id: id,
+        stillPath: stillPath,
+        title: name,
+        airDate: airDate,
+        seasonNumber: seasonNumber,
+        episodeNumber: episodeNumber,
+        runtime: runtime,
+      );
 }
 
 class Crew {
@@ -131,7 +147,7 @@ class Crew {
   final bool adult;
   final int gender;
   final int id;
-  final Department knownForDepartment;
+  final Department? knownForDepartment;
   final String name;
   final String originalName;
   final double popularity;
@@ -156,43 +172,39 @@ class Crew {
   });
 
   factory Crew.fromJson(Map<String, dynamic> json) => Crew(
-    job: json["job"],
-    department: departmentValues.map[json["department"]]!,
-    creditId: json["credit_id"],
-    adult: json["adult"],
-    gender: json["gender"],
-    id: json["id"],
-    knownForDepartment: departmentValues.map[json["known_for_department"]]!,
-    name: json["name"],
-    originalName: json["original_name"],
-    popularity: json["popularity"]?.toDouble(),
-    profilePath: json["profile_path"],
-    character: json["character"],
-    order: json["order"],
-  );
+        job: json["job"],
+        department: departmentValues.map[json["department"]],
+        creditId: json["credit_id"],
+        adult: json["adult"],
+        gender: json["gender"],
+        id: json["id"],
+        knownForDepartment: departmentValues.map[json["known_for_department"]],
+        name: json["name"],
+        originalName: json["original_name"],
+        popularity: json["popularity"]?.toDouble(),
+        profilePath: json["profile_path"],
+        character: json["character"],
+        order: json["order"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "job": job,
-    "department": departmentValues.reverse[department],
-    "credit_id": creditId,
-    "adult": adult,
-    "gender": gender,
-    "id": id,
-    "known_for_department": departmentValues.reverse[knownForDepartment],
-    "name": name,
-    "original_name": originalName,
-    "popularity": popularity,
-    "profile_path": profilePath,
-    "character": character,
-    "order": order,
-  };
+        "job": job,
+        "department": departmentValues.reverse[department],
+        "credit_id": creditId,
+        "adult": adult,
+        "gender": gender,
+        "id": id,
+        "known_for_department": departmentValues.reverse[knownForDepartment],
+        "name": name,
+        "original_name": originalName,
+        "popularity": popularity,
+        "profile_path": profilePath,
+        "character": character,
+        "order": order,
+      };
 }
 
-enum Department {
-  ACTING,
-  DIRECTING,
-  WRITING
-}
+enum Department { ACTING, DIRECTING, WRITING }
 
 final departmentValues = EnumValues({
   "Acting": Department.ACTING,

@@ -4,6 +4,7 @@ import 'package:ditonton/core/utils/state_enum.dart';
 import 'package:ditonton/tv_series/domain/entities/tv_series.dart';
 import 'package:ditonton/tv_series/domain/entities/tv_series_detail.dart';
 import 'package:ditonton/tv_series/presentation/provider/tv_series_detail_notifier.dart';
+import 'package:ditonton/tv_series/presentation/widgets/episode_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -57,7 +58,7 @@ class _TvSeriesDetailPageState extends State<TvSeriesDetailPage> {
   }
 }
 
-class DetailContent extends StatelessWidget {
+class DetailContent extends StatefulWidget {
   final TvSeriesDetail series;
   final List<TvSeries> recommendations;
   final bool isAddedWatchlist;
@@ -65,12 +66,23 @@ class DetailContent extends StatelessWidget {
   DetailContent(this.series, this.recommendations, this.isAddedWatchlist);
 
   @override
+  State<DetailContent> createState() => _DetailContentState();
+}
+
+class _DetailContentState extends State<DetailContent>
+    with SingleTickerProviderStateMixin {
+  late TabController tabController = TabController(
+    length: widget.series.seasons.length,
+    vsync: this,
+  );
+
+  @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Stack(
       children: [
         CachedNetworkImage(
-          imageUrl: '$BASE_IMAGE_URL${series.posterPath}',
+          imageUrl: '$BASE_IMAGE_URL${widget.series.posterPath}',
           width: screenWidth,
           placeholder: (context, url) => Center(
             child: CircularProgressIndicator(),
@@ -101,26 +113,35 @@ class DetailContent extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              series.title,
+                              widget.series.title,
                               style: kHeading5,
                             ),
+                            Text(
+                              _showGenres(widget.series.genres),
+                              style: TextStyle(fontSize: 10),
+                            ),
+                            SizedBox(height: 16),
+                            Text(
+                              widget.series.overview,
+                            ),
+                            SizedBox(height: 16),
                             ElevatedButton(
                               onPressed: () async {
-                                if (!isAddedWatchlist) {
+                                if (!widget.isAddedWatchlist) {
                                   await Provider.of<TvSeriesDetailNotifier>(
-                                          context,
-                                          listen: false)
-                                      .addWatchlist(series);
+                                      context,
+                                      listen: false)
+                                      .addWatchlist(widget.series);
                                 } else {
                                   await Provider.of<TvSeriesDetailNotifier>(
-                                          context,
-                                          listen: false)
-                                      .removeFromWatchlist(series);
+                                      context,
+                                      listen: false)
+                                      .removeFromWatchlist(widget.series);
                                 }
 
                                 final message =
                                     Provider.of<TvSeriesDetailNotifier>(context,
-                                            listen: false)
+                                        listen: false)
                                         .watchlistMessage;
 
                                 if (message == WATCHLIST_ADD_MESSAGE ||
@@ -129,55 +150,58 @@ class DetailContent extends StatelessWidget {
                                       SnackBar(content: Text(message)));
                                 } else {
                                   showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          content: Text(message),
-                                        );
-                                      });
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        content: Text(message),
+                                      );
+                                    },
+                                  );
                                 }
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  isAddedWatchlist
+                                  widget.isAddedWatchlist
                                       ? Icon(Icons.check)
                                       : Icon(Icons.add),
-                                  Text('Watchlist'),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    widget.isAddedWatchlist
+                                        ? 'Added'
+                                        : 'Watchlist',
+                                  ),
                                 ],
                               ),
                             ),
-                            Text(
-                              _showGenres(series.genres),
-                            ),
-                            Text(
-                              '0',
-                            ),
-                            // Row(
-                            //   children: [
-                            //     RatingBarIndicator(
-                            //       rating: series.voteAverage / 2,
-                            //       itemCount: 5,
-                            //       itemBuilder: (context, index) => Icon(
-                            //         Icons.star,
-                            //         color: kMikadoYellow,
-                            //       ),
-                            //       itemSize: 24,
-                            //     ),
-                            //     Text('${series.voteAverage}')
-                            //   ],
-                            // ),
                             SizedBox(height: 16),
-                            Text(
-                              'Overview',
-                              style: kHeading6,
+                            TabBar(
+                              controller: tabController,
+                              isScrollable: true,
+                              indicatorColor: kMikadoYellow,
+                              labelPadding: const EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(5),
+                              tabs: widget.series.seasons
+                                  .map((season) => Text(season.name))
+                                  .toList(),
                             ),
-                            Text(
-                              series.overview,
+                            SizedBox(
+                              height: 300,
+                              child: TabBarView(
+                                controller: tabController,
+                                children: widget.series.seasons
+                                    .map(
+                                      (season) => EpisodeCardList(
+                                        id: widget.series.id,
+                                        seasonNumber: season.seasonNumber,
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
                             ),
                             SizedBox(height: 16),
                             Text(
-                              'Recommendations',
+                              'More Like This',
                               style: kHeading6,
                             ),
                             Consumer<TvSeriesDetailNotifier>(
@@ -197,7 +221,8 @@ class DetailContent extends StatelessWidget {
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       itemBuilder: (context, index) {
-                                        final movie = recommendations[index];
+                                        final movie =
+                                            widget.recommendations[index];
                                         return Padding(
                                           padding: const EdgeInsets.all(4.0),
                                           child: InkWell(
@@ -228,7 +253,7 @@ class DetailContent extends StatelessWidget {
                                           ),
                                         );
                                       },
-                                      itemCount: recommendations.length,
+                                      itemCount: widget.recommendations.length,
                                     ),
                                   );
                                 } else {
@@ -236,6 +261,7 @@ class DetailContent extends StatelessWidget {
                                 }
                               },
                             ),
+                            SizedBox(height: 16),
                           ],
                         ),
                       ),
@@ -277,24 +303,13 @@ class DetailContent extends StatelessWidget {
   String _showGenres(List<String> genres) {
     String result = '';
     for (var genre in genres) {
-      result += genre + ', ';
+      result += genre + ' | ';
     }
 
     if (result.isEmpty) {
       return result;
     }
 
-    return result.substring(0, result.length - 2);
-  }
-
-  String _showDuration(int runtime) {
-    final int hours = runtime ~/ 60;
-    final int minutes = runtime % 60;
-
-    if (hours > 0) {
-      return '${hours}h ${minutes}m';
-    } else {
-      return '${minutes}m';
-    }
+    return result.substring(0, result.length - 3);
   }
 }

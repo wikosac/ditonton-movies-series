@@ -5,14 +5,14 @@ class Search extends Equatable {
   const Search({
     required this.id,
     this.posterPath,
-    required this.title,
+    this.title,
     this.releaseDate,
     this.type
   });
 
   final int id;
   final String? posterPath;
-  final String title;
+  final String? title;
   final String? releaseDate;
   final MediaType? type;
 

@@ -16,7 +16,7 @@ class WatchlistNotifier extends ChangeNotifier {
 
   String get message => _message;
 
-  WatchlistNotifier({required this.getWatchlistMovies});
+  WatchlistNotifier(this.getWatchlistMovies);
 
   final GetWatchlist getWatchlistMovies;
 

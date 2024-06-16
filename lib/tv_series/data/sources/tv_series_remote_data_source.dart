@@ -4,6 +4,7 @@ import 'package:ditonton/core/errors/exception.dart';
 import 'package:ditonton/core/utils/constants.dart';
 import 'package:ditonton/tv_series/data/models/tv_detail_response.dart';
 import 'package:ditonton/tv_series/data/models/tv_response.dart';
+import 'package:ditonton/tv_series/data/models/tv_season_response.dart';
 import 'package:http/http.dart' as http;
 
 class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
@@ -14,7 +15,7 @@ class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
   @override
   Future<TvDetailResponse> getTvSeriesDetail(int id) async {
     final response = await client.get(Uri.parse('$BASE_URL/tv/$id?$API_KEY'));
-      print(response.body);
+    print(response.body);
     if (response.statusCode == 200) {
       return TvDetailResponse.fromJson(json.decode(response.body));
     } else {
@@ -65,6 +66,17 @@ class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
       throw ServerException(message: response.body);
     }
   }
+
+  @override
+  Future<SeasonResponse> getTvSeriesSeason(int id, int seasonNumber) async {
+    final response =
+        await client.get(Uri.parse('$BASE_URL/tv/$id/season/$seasonNumber?$API_KEY'));
+    if (response.statusCode == 200) {
+      return SeasonResponse.fromJson(json.decode(response.body));
+    } else {
+      throw ServerException(message: response.body);
+    }
+  }
 }
 
 abstract class TvSeriesRemoteDataSource {
@@ -77,4 +89,6 @@ abstract class TvSeriesRemoteDataSource {
   Future<TvDetailResponse> getTvSeriesDetail(int id);
 
   Future<TvResponse> getTvSeriesRecommendations(int id);
+
+  Future<SeasonResponse> getTvSeriesSeason(int id, int seasonNumber);
 }

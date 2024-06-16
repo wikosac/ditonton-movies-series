@@ -45,7 +45,7 @@ class SearchCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      search.title,
+                      search.title ?? '',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: kHeading6,

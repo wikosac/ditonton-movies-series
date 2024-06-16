@@ -10,6 +10,6 @@ class GetTopRatedTvSeries extends UsecaseWithoutParams<List<TvSeries>> {
 
   @override
   ResultFuture<List<TvSeries>> call() {
-    return tvSeriesRepository.getNowPlayingTvSeries();
+    return tvSeriesRepository.getTopRatedTvSeries();
   }
 }

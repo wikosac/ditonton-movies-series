@@ -21,7 +21,7 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
   void initState() {
     super.initState();
     Future.microtask(
-            () => Provider.of<TvSeriesListNotifier>(context, listen: false)
+        () => Provider.of<TvSeriesListNotifier>(context, listen: false)
           ..fetchNowPlayingTvSeries()
           ..fetchPopularTvSeries()
           ..fetchTopRatedTvSeries());
@@ -36,7 +36,7 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Now Playing',
+              'On The Air',
               style: kHeading6,
             ),
             Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
@@ -105,7 +105,10 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: [Text('See More'), Icon(Icons.arrow_forward_ios)],
+              children: [
+                Text('See More'),
+                Icon(Icons.arrow_forward_ios),
+              ],
             ),
           ),
         ),

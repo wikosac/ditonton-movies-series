@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
 class TvSeries extends Equatable {
-  const TvSeries({required this.id, required this.posterPath});
+  const TvSeries({required this.id, this.posterPath});
 
   final int id;
-  final String posterPath;
+  final String? posterPath;
 
   @override
   List<Object?> get props => [id];

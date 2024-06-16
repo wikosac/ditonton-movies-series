@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/core/utils/constants.dart';
 import 'package:ditonton/core/utils/state_enum.dart';
-import 'package:ditonton/movies/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:ditonton/tv_series/presentation/pages/tv_series_detail_page.dart';
 import 'package:ditonton/tv_series/presentation/provider/top_rated_tv_series_notifier.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +19,8 @@ class _TopRatedTvSeriesPageState extends State<TopRatedTvSeriesPage> {
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<TopRatedMoviesNotifier>(context, listen: false)
-            .fetchTopRatedMovies());
+        Provider.of<TopRatedTvSeriesNotifier>(context, listen: false)
+            .fetchTopRatedTvSeries());
   }
 
   @override

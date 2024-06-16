@@ -47,26 +47,3 @@ class SeasonEntity extends Equatable {
   @override
   List<Object?> get props => [id];
 }
-
-class Episode extends Equatable {
-  final int id;
-  final String image;
-  final String title;
-  final int seasonNumber;
-  final int episodeNumber;
-  final DateTime airDate;
-  final int runtime;
-
-  Episode({
-    required this.id,
-    required this.image,
-    required this.title,
-    required this.airDate,
-    required this.seasonNumber,
-    required this.episodeNumber,
-    required this.runtime,
-  });
-
-  @override
-  List<Object?> get props => [id];
-}
