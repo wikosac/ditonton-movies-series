@@ -13,6 +13,7 @@ class TvSeriesDetail extends Equatable {
     required this.genres,
     required this.overview,
     required this.seasons,
+    required this.rating,
   });
 
   final int id;
@@ -24,6 +25,7 @@ class TvSeriesDetail extends Equatable {
   final List<String> genres;
   final String overview;
   final List<SeasonEntity> seasons;
+  final double rating;
 
   Watchlist toWatchlist() => Watchlist(
         id: id,

@@ -169,6 +169,7 @@ class TvDetailResponse {
         genres: genres.map((item) => item.name).toList(),
         overview: overview,
         seasons: seasons.map((item) => item.toEntity()).toList(),
+        rating: voteAverage,
       );
 }
 
@@ -365,9 +366,8 @@ class Season {
   });
 
   factory Season.fromJson(Map<String, dynamic> json) => Season(
-        airDate: json["air_date"] != null
-            ? DateTime.parse(json["air_date"])
-            : null,
+        airDate:
+            json["air_date"] != null ? DateTime.parse(json["air_date"]) : null,
         episodeCount: json["episode_count"],
         id: json["id"],
         name: json["name"],

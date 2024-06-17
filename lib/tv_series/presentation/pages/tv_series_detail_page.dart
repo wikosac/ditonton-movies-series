@@ -6,6 +6,7 @@ import 'package:ditonton/tv_series/domain/entities/tv_series_detail.dart';
 import 'package:ditonton/tv_series/presentation/provider/tv_series_detail_notifier.dart';
 import 'package:ditonton/tv_series/presentation/widgets/episode_card_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class TvSeriesDetailPage extends StatefulWidget {
@@ -119,6 +120,25 @@ class _DetailContentState extends State<DetailContent>
                             Text(
                               _showGenres(widget.series.genres),
                               style: TextStyle(fontSize: 10),
+                            ),
+                            SizedBox(height: 8),
+                            Row(
+                              children: [
+                                RatingBarIndicator(
+                                  rating: widget.series.rating / 2,
+                                  itemCount: 5,
+                                  itemBuilder: (context, index) => Icon(
+                                    Icons.star,
+                                    color: kMikadoYellow,
+                                  ),
+                                  itemSize: 16,
+                                ),
+                                SizedBox(width: 4),
+                                Text(
+                                  '${widget.series.rating}',
+                                  style: TextStyle(fontSize: 10),
+                                ),
+                              ],
                             ),
                             SizedBox(height: 16),
                             Text(
