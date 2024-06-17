@@ -67,7 +67,7 @@ void main() {
           .thenAnswer((_) async =>
               http.Response(readJson('dummy_data/popular.json'), 200));
       // act
-      final result = await dataSource.getPopularTvSeries();
+      final result = await dataSource.getNowPlayingTvSeries();
       // assert
       expect(result, tMovieList);
     });
@@ -79,7 +79,7 @@ void main() {
       when(mockHttpClient.get(Uri.parse('$BASE_URL/movie/popular?$API_KEY')))
           .thenAnswer((_) async => http.Response('Not Found', 404));
       // act
-      final call = dataSource.getPopularTvSeries();
+      final call = dataSource.getNowPlayingTvSeries();
       // assert
       expect(() => call, throwsA(isA<ServerException>()));
     });

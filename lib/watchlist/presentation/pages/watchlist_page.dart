@@ -57,7 +57,6 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
               itemCount: data.watchlist.length,
               itemBuilder: (context, index) {
                 final watchlist = data.watchlist[index];
-                print('Media: ' + watchlist.mediaType);
                 return InkWell(
                   onTap: () {
                     watchlist.mediaType == MediaType.MOVIE.name

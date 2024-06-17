@@ -4,16 +4,20 @@ import 'package:ditonton/injection.dart' as di;
 import 'package:ditonton/movies/presentation/pages/about_page.dart';
 import 'package:ditonton/movies/presentation/pages/home_movie_page.dart';
 import 'package:ditonton/movies/presentation/pages/movie_detail_page.dart';
+import 'package:ditonton/movies/presentation/pages/now_playing_movies_page.dart';
 import 'package:ditonton/movies/presentation/pages/popular_movies_page.dart';
 import 'package:ditonton/movies/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/movies/presentation/provider/movie_detail_notifier.dart';
 import 'package:ditonton/movies/presentation/provider/movie_list_notifier.dart';
+import 'package:ditonton/movies/presentation/provider/now_playing_movies_notifier.dart';
 import 'package:ditonton/movies/presentation/provider/popular_movies_notifier.dart';
 import 'package:ditonton/movies/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:ditonton/search/presentation/pages/search_page.dart';
+import 'package:ditonton/tv_series/presentation/pages/now_playing_tv_series_page.dart';
 import 'package:ditonton/tv_series/presentation/pages/popular_tv_series_page.dart';
 import 'package:ditonton/tv_series/presentation/pages/top_rated_tv_series_page.dart';
 import 'package:ditonton/tv_series/presentation/pages/tv_series_detail_page.dart';
+import 'package:ditonton/tv_series/presentation/provider/now_playing_tv_series_notifier.dart';
 import 'package:ditonton/tv_series/presentation/provider/popular_tv_series_notifier.dart';
 import 'package:ditonton/tv_series/presentation/provider/top_rated_tv_series_notifier.dart';
 import 'package:ditonton/tv_series/presentation/provider/tv_series_detail_notifier.dart';
@@ -59,6 +63,12 @@ class MyApp extends StatelessWidget {
           create: (_) => di.locator<TopRatedMoviesNotifier>(),
         ),
         ChangeNotifierProvider(
+          create: (_) => di.locator<NowPlayingMoviesNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<NowPlayingTvSeriesNotifier>(),
+        ),
+        ChangeNotifierProvider(
           create: (_) => di.locator<PopularMoviesNotifier>(),
         ),
         ChangeNotifierProvider(
@@ -97,6 +107,10 @@ class MyApp extends StatelessWidget {
               );
             case PopularTvSeriesPage.ROUTE_NAME:
               return CupertinoPageRoute(builder: (_) => PopularTvSeriesPage());
+            case NowPlayingMoviesPage.ROUTE_NAME:
+              return CupertinoPageRoute(builder: (_) => NowPlayingMoviesPage());
+            case NowPlayingTvSeriesPage.ROUTE_NAME:
+              return CupertinoPageRoute(builder: (_) => NowPlayingTvSeriesPage());
             case TopRatedTvSeriesPage.ROUTE_NAME:
               return CupertinoPageRoute(builder: (_) => TopRatedTvSeriesPage());
             case TvSeriesDetailPage.ROUTE_NAME:

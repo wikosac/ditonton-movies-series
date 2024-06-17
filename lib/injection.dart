@@ -8,6 +8,7 @@ import 'package:ditonton/movies/domain/usecases/get_popular_movies.dart';
 import 'package:ditonton/movies/domain/usecases/get_top_rated_movies.dart';
 import 'package:ditonton/movies/presentation/provider/movie_detail_notifier.dart';
 import 'package:ditonton/movies/presentation/provider/movie_list_notifier.dart';
+import 'package:ditonton/movies/presentation/provider/now_playing_movies_notifier.dart';
 import 'package:ditonton/movies/presentation/provider/popular_movies_notifier.dart';
 import 'package:ditonton/movies/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:ditonton/search/data/repositories/search_repository_impl.dart';
@@ -24,6 +25,7 @@ import 'package:ditonton/tv_series/domain/usecases/get_top_rated_tv_series.dart'
 import 'package:ditonton/tv_series/domain/usecases/get_tv_series_detail.dart';
 import 'package:ditonton/tv_series/domain/usecases/get_tv_series_recommendations.dart';
 import 'package:ditonton/tv_series/domain/usecases/get_tv_series_season.dart';
+import 'package:ditonton/tv_series/presentation/provider/now_playing_tv_series_notifier.dart';
 import 'package:ditonton/tv_series/presentation/provider/popular_tv_series_notifier.dart';
 import 'package:ditonton/tv_series/presentation/provider/top_rated_tv_series_notifier.dart';
 import 'package:ditonton/tv_series/presentation/provider/tv_series_detail_notifier.dart';
@@ -77,12 +79,14 @@ void init() {
       removeWatchlist: locator(),
     ),
   );
-  locator.registerFactory(() => TvSeriesSeasonNotifier(locator()));
-  locator.registerFactory(() => SearchNotifier(locator()));
+  locator.registerFactory(() => NowPlayingMoviesNotifier(locator()));
   locator.registerFactory(() => PopularMoviesNotifier(locator()));
   locator.registerFactory(() => TopRatedMoviesNotifier(locator()));
+  locator.registerFactory(() => NowPlayingTvSeriesNotifier(locator()));
   locator.registerFactory(() => PopularTvSeriesNotifier(locator()));
   locator.registerFactory(() => TopRatedTvSeriesNotifier(locator()));
+  locator.registerFactory(() => TvSeriesSeasonNotifier(locator()));
+  locator.registerFactory(() => SearchNotifier(locator()));
   locator.registerFactory(() => WatchlistNotifier(locator()));
 
   // use case

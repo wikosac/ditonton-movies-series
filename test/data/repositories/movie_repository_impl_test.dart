@@ -116,7 +116,7 @@ void main() {
       when(mockRemoteDataSource.getPopularMovies())
           .thenAnswer((_) async => tMovieModelList);
       // act
-      final result = await repository.getPopularTvSeries();
+      final result = await repository.getNowPlayingTvSeries();
       // assert
       /* workaround to test List in Right. Issue: https://github.com/spebbe/dartz/issues/80 */
       final resultList = result.getOrElse(() => []);
@@ -130,7 +130,7 @@ void main() {
       when(mockRemoteDataSource.getPopularMovies())
           .thenThrow(ServerException());
       // act
-      final result = await repository.getPopularTvSeries();
+      final result = await repository.getNowPlayingTvSeries();
       // assert
       expect(result, Left(ServerFailure('')));
     });
@@ -142,7 +142,7 @@ void main() {
       when(mockRemoteDataSource.getPopularMovies())
           .thenThrow(SocketException('Failed to connect to the network'));
       // act
-      final result = await repository.getPopularTvSeries();
+      final result = await repository.getNowPlayingTvSeries();
       // assert
       expect(
           result, Left(ConnectionFailure('Failed to connect to the network')));
