@@ -242,17 +242,6 @@ class MockMovieRemoteDataSource extends _i1.Mock
         returnValue:
             _i6.Future<List<_i11.MovieModel>>.value(<_i11.MovieModel>[]),
       ) as _i6.Future<List<_i11.MovieModel>>);
-
-  @override
-  _i6.Future<List<_i11.MovieModel>> searchMovies(String? query) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #searchMovies,
-          [query],
-        ),
-        returnValue:
-            _i6.Future<List<_i11.MovieModel>>.value(<_i11.MovieModel>[]),
-      ) as _i6.Future<List<_i11.MovieModel>>);
 }
 
 /// A class which mocks [DatabaseHelper].
