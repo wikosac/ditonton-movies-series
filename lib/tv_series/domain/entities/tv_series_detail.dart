@@ -1,3 +1,4 @@
+import 'package:ditonton/search/data/models/search_response.dart';
 import 'package:ditonton/watchlist/domain/entities/watchlist.dart';
 import 'package:equatable/equatable.dart';
 
@@ -27,6 +28,7 @@ class TvSeriesDetail extends Equatable {
   Watchlist toWatchlist() => Watchlist(
         id: id,
         posterPath: posterPath,
+        mediaType: MediaType.TV.name,
       );
 
   @override

@@ -142,13 +142,20 @@ class TvSeriesList extends StatelessWidget {
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
-                child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${data.posterPath}',
-                  placeholder: (context, url) => Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
+                child: data.posterPath != null
+                    ? CachedNetworkImage(
+                        imageUrl: '$BASE_IMAGE_URL${data.posterPath}',
+                        placeholder: (context, url) => Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      )
+                    : SizedBox(
+                        width: 120,
+                        child: Center(
+                          child: Icon(Icons.error),
+                        ),
+                      ),
               ),
             ),
           );

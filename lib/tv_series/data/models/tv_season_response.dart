@@ -9,7 +9,7 @@ String seasonResponseToJson(SeasonResponse data) => json.encode(data.toJson());
 
 class SeasonResponse {
   final String id;
-  final DateTime airDate;
+  final String? airDate;
   final List<EpisodeModel> episodes;
   final String name;
   final String overview;
@@ -32,7 +32,7 @@ class SeasonResponse {
 
   factory SeasonResponse.fromJson(Map<String, dynamic> json) => SeasonResponse(
         id: json["_id"],
-        airDate: DateTime.parse(json["air_date"]),
+        airDate: json["air_date"],
         episodes: List<EpisodeModel>.from(
             json["episodes"].map((x) => EpisodeModel.fromJson(x))),
         name: json["name"],
@@ -45,8 +45,7 @@ class SeasonResponse {
 
   Map<String, dynamic> toJson() => {
         "_id": id,
-        "air_date":
-            "${airDate.year.toString().padLeft(4, '0')}-${airDate.month.toString().padLeft(2, '0')}-${airDate.day.toString().padLeft(2, '0')}",
+        "air_date": airDate,
         "episodes": List<dynamic>.from(episodes.map((x) => x.toJson())),
         "name": name,
         "overview": overview,

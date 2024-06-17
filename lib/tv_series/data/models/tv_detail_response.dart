@@ -31,7 +31,7 @@ class TvDetailResponse {
   final String originalName;
   final String overview;
   final double popularity;
-  final String posterPath;
+  final String? posterPath;
   final List<Network> productionCompanies;
   final List<ProductionCountry> productionCountries;
   final List<Season> seasons;
@@ -165,7 +165,7 @@ class TvDetailResponse {
         year: firstAirDate,
         seasonCount: seasons.length,
         lang: languages,
-        posterPath: posterPath,
+        posterPath: posterPath ?? backdropPath ?? '',
         genres: genres.map((item) => item.name).toList(),
         overview: overview,
         seasons: seasons.map((item) => item.toEntity()).toList(),

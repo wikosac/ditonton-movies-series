@@ -129,19 +129,19 @@ class _DetailContentState extends State<DetailContent>
                               onPressed: () async {
                                 if (!widget.isAddedWatchlist) {
                                   await Provider.of<TvSeriesDetailNotifier>(
-                                      context,
-                                      listen: false)
+                                          context,
+                                          listen: false)
                                       .addWatchlist(widget.series);
                                 } else {
                                   await Provider.of<TvSeriesDetailNotifier>(
-                                      context,
-                                      listen: false)
+                                          context,
+                                          listen: false)
                                       .removeFromWatchlist(widget.series);
                                 }
 
                                 final message =
                                     Provider.of<TvSeriesDetailNotifier>(context,
-                                        listen: false)
+                                            listen: false)
                                         .watchlistMessage;
 
                                 if (message == WATCHLIST_ADD_MESSAGE ||

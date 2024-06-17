@@ -40,62 +40,65 @@ class _EpisodeCardListState extends State<EpisodeCardList>
             child: CircularProgressIndicator(),
           );
         } else if (provider.episodeState == RequestState.Loaded) {
-          return ListView.builder(
-            itemCount: provider.episodes.length,
-            itemBuilder: (context, index) {
-              final episode = provider.episodes[index];
-              return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(4),
-                      child: episode.stillPath == null
-                          ? const SizedBox(
-                              width: 100,
-                              height: 100,
-                              child: Icon(Icons.error),
-                            )
-                          : CachedNetworkImage(
-                              imageUrl: '$BASE_IMAGE_URL${episode.stillPath}',
-                              width: 100,
-                              height: 100,
-                              placeholder: (context, url) => const Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
-                            ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+          return provider.episodes.isNotEmpty
+              ? ListView.builder(
+                  itemCount: provider.episodes.length,
+                  itemBuilder: (context, index) {
+                    final episode = provider.episodes[index];
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            episode.title,
-                            style: kHeading6,
-                            overflow: TextOverflow.ellipsis,
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            child: episode.stillPath == null
+                                ? const SizedBox(
+                                    width: 100,
+                                    height: 100,
+                                    child: Icon(Icons.error),
+                                  )
+                                : CachedNetworkImage(
+                                    imageUrl:
+                                        '$BASE_IMAGE_URL${episode.stillPath}',
+                                    width: 100,
+                                    height: 100,
+                                    placeholder: (context, url) => const Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
+                                  ),
                           ),
-                          Text(
-                            'S${episode.seasonNumber} E${episode.episodeNumber} - ${convertDate(episode.airDate)} - ${episode.runtime ?? 0}m',
-                            style: kBodyText.copyWith(
-                                color: Colors.grey, fontSize: 12),
-                          )
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  episode.title,
+                                  style: kHeading6,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  'S${episode.seasonNumber} E${episode.episodeNumber} - ${convertDate(episode.airDate)} - ${episode.runtime ?? 0}m',
+                                  style: kBodyText.copyWith(
+                                      color: Colors.grey, fontSize: 12),
+                                )
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
+                    );
+                  },
+                )
+              : Center(child: Text('No data'));
         } else {
           return Center(
             child: Text(provider.message),
