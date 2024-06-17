@@ -1,5 +1,4 @@
-import 'package:ditonton/movies/data/models/genre_model.dart';
-import 'package:ditonton/movies/data/models/movie_detail_model.dart';
+
 import 'package:ditonton/movies/data/models/movie_table.dart';
 import 'package:ditonton/movies/domain/entities/genre.dart';
 import 'package:ditonton/movies/domain/entities/movie.dart';
@@ -26,60 +25,36 @@ final testMovieList = [testMovie];
 
 final testMovieDetail = MovieDetail(
   adult: false,
-  backdropPath: '/path.jpg',
+  backdropPath: 'backdropPath',
   genres: [Genre(id: 1, name: 'Action')],
   id: 1,
-  originalTitle: 'Original Title',
-  overview: 'Overview',
-  posterPath: '/path.jpg',
-  releaseDate: '2020-05-05',
+  originalTitle: 'originalTitle',
+  overview: 'overview',
+  posterPath: 'posterPath',
+  releaseDate: 'releaseDate',
   runtime: 120,
-  title: 'Title',
-  voteAverage: 1.0,
+  title: 'title',
+  voteAverage: 1,
   voteCount: 1,
 );
 
 final testWatchlistMovie = Movie.watchlist(
   id: 1,
-  title: 'Title',
-  posterPath: '/path.jpg',
-  overview: 'Overview',
+  title: 'title',
+  posterPath: 'posterPath',
+  overview: 'overview',
 );
 
 final testMovieTable = MovieTable(
   id: 1,
-  title: 'Title',
-  posterPath: '/path.jpg',
-  overview: 'Overview',
+  title: 'title',
+  posterPath: 'posterPath',
+  overview: 'overview',
 );
 
 final testMovieMap = {
   'id': 1,
-  'title': 'Title',
-  'posterPath': '/path.jpg',
-  'overview': 'Overview',
+  'overview': 'overview',
+  'posterPath': 'posterPath',
+  'title': 'title',
 };
-
-final testMovieDetailModel = MovieDetailResponse(
-  adult: false,
-  backdropPath: "/path.jpg",
-  budget: 100,
-  genres: [GenreModel(id: 1, name: "Action")],
-  homepage: "https://google.com",
-  id: 1,
-  imdbId: "imdb1",
-  originalLanguage: "en",
-  originalTitle: "Original Title",
-  overview: "Overview",
-  popularity: 1.0,
-  posterPath: "/path.jpg",
-  releaseDate: "2020-05-05",
-  revenue: 12000,
-  runtime: 120,
-  status: "Status",
-  tagline: "Tagline",
-  title: "Title",
-  video: false,
-  voteAverage: 1.0,
-  voteCount: 1,
-);
