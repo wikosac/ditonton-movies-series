@@ -17,7 +17,6 @@ void main() {
 
   final tSearchList = [testSearchEntity];
   final query = 'the flash';
-  // final tError = ServerException(message: 'Server error');
 
   test('return either List<Search>', () async {
     when(mockRepository.search(query))

@@ -9,7 +9,7 @@ class TvSeriesSeasonNotifier extends ChangeNotifier {
   final GetTvSeriesSeason getTvSeriesSeason;
 
   List<Episode> _episodes = [];
-  RequestState _episodeState = RequestState.Loading;
+  RequestState _episodeState = RequestState.Empty;
   String _message = '';
 
   Future<void> fetchTvSeriesSeason(int id, int seasonNumber) async {

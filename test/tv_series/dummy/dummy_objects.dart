@@ -17,7 +17,7 @@ final dummyTvResponse = TvResponse(
       originalLanguage: "en",
       originalName: "The Boys",
       overview:
-          "A group of vigilantes known informally as “The Boys” set out to take down corrupt superheroes with no more than blue-collar grit and a willingness to fight dirty.",
+          "A group of vigilantes known informally as \"The Boys\" set out to take down corrupt superheroes with no more than blue-collar grit and a willingness to fight dirty.",
       popularity: 2783.39,
       posterPath: "/2zmTngn1tYC1AvfnrFLhxeD82hz.jpg",
       firstAirDate: "2019-07-25",
@@ -99,7 +99,7 @@ final dummyTvDetailResponse = TvDetailResponse(
   originalLanguage: "en",
   originalName: "The Boys",
   overview:
-      "A group of vigilantes known informally as “The Boys” set out to take down corrupt superheroes with no more than blue-collar grit and a willingness to fight dirty.",
+      "A group of vigilantes known informally as \"The Boys\" set out to take down corrupt superheroes with no more than blue-collar grit and a willingness to fight dirty.",
   popularity: 2783.39,
   posterPath: "/2zmTngn1tYC1AvfnrFLhxeD82hz.jpg",
   productionCompanies: [
@@ -166,7 +166,10 @@ final dummySeasonResponse = SeasonResponse(
   voteAverage: 0,
 );
 
-final dummyTvSeries = TvSeries(id: 76479);
+final dummyTvSeries = TvSeries(
+  id: 76479,
+  posterPath: '/2zmTngn1tYC1AvfnrFLhxeD82hz.jpg',
+);
 
 final dummyTvSeriesDetail = TvSeriesDetail(
   id: 76479,
@@ -177,7 +180,7 @@ final dummyTvSeriesDetail = TvSeriesDetail(
   posterPath: "/2zmTngn1tYC1AvfnrFLhxeD82hz.jpg",
   genres: ["Sci-Fi & Fantasy"],
   overview:
-      "A group of vigilantes known informally as “The Boys” set out to take down corrupt superheroes with no more than blue-collar grit and a willingness to fight dirty.",
+      "A group of vigilantes known informally as \"The Boys\" set out to take down corrupt superheroes with no more than blue-collar grit and a willingness to fight dirty.",
   seasons: [SeasonEntity(id: 163277, name: "Specials", seasonNumber: 0)],
   rating: 8.473,
 );

@@ -84,7 +84,7 @@ class MockSearchNotifier extends _i1.Mock implements _i3.SearchNotifier {
   @override
   _i7.Future<void> fetchSearch(String? query) => (super.noSuchMethod(
         Invocation.method(
-          #fetchMovieSearch,
+          #fetchSearch,
           [query],
         ),
         returnValue: _i7.Future<void>.value(),

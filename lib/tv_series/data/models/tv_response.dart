@@ -1,13 +1,7 @@
-import 'dart:convert';
-
 import 'package:ditonton/tv_series/domain/entities/tv_series.dart';
+import 'package:equatable/equatable.dart';
 
-TvResponse tvResponseFromJson(String str) =>
-    TvResponse.fromJson(json.decode(str));
-
-String tvResponseToJson(TvResponse data) => json.encode(data.toJson());
-
-class TvResponse {
+class TvResponse extends Equatable {
   final int page;
   final List<Result> results;
   final int totalPages;
@@ -34,9 +28,17 @@ class TvResponse {
         "total_pages": totalPages,
         "total_results": totalResults,
       };
+
+  @override
+  List<Object?> get props => [
+        page,
+        results,
+        totalPages,
+        totalResults,
+      ];
 }
 
-class Result {
+class Result extends Equatable {
   final bool adult;
   final String? backdropPath;
   final List<int> genreIds;
@@ -107,4 +109,22 @@ class Result {
         id: id,
         posterPath: posterPath,
       );
+
+  @override
+  List<Object?> get props => [
+        adult,
+        backdropPath,
+        genreIds,
+        id,
+        originCountry,
+        originalLanguage,
+        originalName,
+        overview,
+        popularity,
+        posterPath,
+        firstAirDate,
+        name,
+        voteAverage,
+        voteCount,
+      ];
 }

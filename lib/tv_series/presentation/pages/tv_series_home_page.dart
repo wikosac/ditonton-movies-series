@@ -38,8 +38,8 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
           children: [
             _buildSubHeading(
               title: 'On The Air',
-              onTap: () =>
-                  Navigator.pushNamed(context, NowPlayingTvSeriesPage.ROUTE_NAME),
+              onTap: () => Navigator.pushNamed(
+                  context, NowPlayingTvSeriesPage.ROUTE_NAME),
             ),
             Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
               final state = data.nowPlayingState;
@@ -50,7 +50,10 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
               } else if (state == RequestState.Loaded) {
                 return TvSeriesList(data.nowPlayingTvSeries);
               } else {
-                return Text('Failed');
+                return Text(
+                  data.message,
+                  semanticsLabel: 'text_info_1',
+                );
               }
             }),
             _buildSubHeading(
@@ -67,7 +70,10 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
               } else if (state == RequestState.Loaded) {
                 return TvSeriesList(data.popularTvSeries);
               } else {
-                return Text('Failed');
+                return Text(
+                  data.message,
+                  semanticsLabel: 'text_info_2',
+                );
               }
             }),
             _buildSubHeading(
@@ -84,7 +90,10 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
               } else if (state == RequestState.Loaded) {
                 return TvSeriesList(data.topRatedTvSeries);
               } else {
-                return Text('Failed');
+                return Text(
+                  data.message,
+                  semanticsLabel: 'text_info_3',
+                );
               }
             }),
             SizedBox(height: 84),

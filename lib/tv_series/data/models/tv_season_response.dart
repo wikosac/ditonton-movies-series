@@ -1,13 +1,9 @@
 import 'dart:convert';
 
 import 'package:ditonton/tv_series/domain/entities/episode.dart';
+import 'package:equatable/equatable.dart';
 
-SeasonResponse seasonResponseFromJson(String str) =>
-    SeasonResponse.fromJson(json.decode(str));
-
-String seasonResponseToJson(SeasonResponse data) => json.encode(data.toJson());
-
-class SeasonResponse {
+class SeasonResponse extends Equatable {
   final String id;
   final String? airDate;
   final List<EpisodeModel> episodes;
@@ -54,9 +50,22 @@ class SeasonResponse {
         "season_number": seasonNumber,
         "vote_average": voteAverage,
       };
+
+  @override
+  List<Object?> get props => [
+    id,
+    airDate,
+    episodes,
+    name,
+    overview,
+    seasonResponseId,
+    posterPath,
+    seasonNumber,
+    voteAverage,
+  ];
 }
 
-class EpisodeModel {
+class EpisodeModel extends Equatable {
   final String? airDate;
   final int episodeNumber;
   final String episodeType;
@@ -137,9 +146,28 @@ class EpisodeModel {
         episodeNumber: episodeNumber,
         runtime: runtime,
       );
+
+  @override
+  List<Object?> get props => [
+    airDate,
+    episodeNumber,
+    episodeType,
+    id,
+    name,
+    overview,
+    productionCode,
+    runtime,
+    seasonNumber,
+    showId,
+    stillPath,
+    voteAverage,
+    voteCount,
+    crew,
+    guestStars,
+  ];
 }
 
-class Crew {
+class Crew extends Equatable {
   final String? job;
   final Department? department;
   final String creditId;
@@ -201,6 +229,23 @@ class Crew {
         "character": character,
         "order": order,
       };
+
+  @override
+  List<Object?> get props => [
+    job,
+    department,
+    creditId,
+    adult,
+    gender,
+    id,
+    knownForDepartment,
+    name,
+    originalName,
+    popularity,
+    profilePath,
+    character,
+    order,
+  ];
 }
 
 enum Department { ACTING, DIRECTING, WRITING }

@@ -19,7 +19,7 @@ import 'package:ditonton/search/presentation/provider/search_notifier.dart';
 import 'package:ditonton/tv_series/data/repositories/tv_series_repository_impl.dart';
 import 'package:ditonton/tv_series/data/sources/tv_series_remote_data_source.dart';
 import 'package:ditonton/tv_series/domain/repositories/tv_series_repository.dart';
-import 'package:ditonton/tv_series/domain/usecases/get%20_popular_tv_series.dart';
+import 'package:ditonton/tv_series/domain/usecases/get_popular_tv_series.dart';
 import 'package:ditonton/tv_series/domain/usecases/get_now_playing_tv_series.dart';
 import 'package:ditonton/tv_series/domain/usecases/get_top_rated_tv_series.dart';
 import 'package:ditonton/tv_series/domain/usecases/get_tv_series_detail.dart';
