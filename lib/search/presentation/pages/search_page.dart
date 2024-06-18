@@ -1,6 +1,6 @@
 import 'package:ditonton/core/utils/constants.dart';
 import 'package:ditonton/core/utils/state_enum.dart';
-import 'package:ditonton/search/presentation/provider/movie_search_notifier.dart';
+import 'package:ditonton/search/presentation/provider/search_notifier.dart';
 import 'package:ditonton/search/presentation/widgets/search_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +22,7 @@ class SearchPage extends StatelessWidget {
             TextField(
               onSubmitted: (query) {
                 Provider.of<SearchNotifier>(context, listen: false)
-                    .fetchMovieSearch(query);
+                    .fetchSearch(query);
               },
               decoration: InputDecoration(
                 hintText: 'Search title',
@@ -30,6 +30,7 @@ class SearchPage extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
               textInputAction: TextInputAction.search,
+              key: Key('textField_search'),
             ),
             SizedBox(height: 16),
             Text(
@@ -56,7 +57,10 @@ class SearchPage extends StatelessWidget {
                   );
                 } else {
                   return Center(
-                    child: Text(data.message),
+                    child: Text(
+                      data.message,
+                      semanticsLabel: 'text_info',
+                    ),
                   );
                 }
               },

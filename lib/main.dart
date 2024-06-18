@@ -29,7 +29,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'search/presentation/provider/movie_search_notifier.dart';
+import 'search/presentation/provider/search_notifier.dart';
 
 void main() {
   di.init();

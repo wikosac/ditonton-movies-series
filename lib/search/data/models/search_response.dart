@@ -1,13 +1,7 @@
-import 'dart:convert';
-
 import 'package:ditonton/search/domain/entities/search.dart';
+import 'package:equatable/equatable.dart';
 
-SearchResponse searchResponseFromJson(String str) =>
-    SearchResponse.fromJson(json.decode(str));
-
-String searchResponseToJson(SearchResponse data) => json.encode(data.toJson());
-
-class SearchResponse {
+class SearchResponse extends Equatable {
   final int page;
   final List<Result> results;
   final int totalPages;
@@ -34,9 +28,12 @@ class SearchResponse {
         "total_pages": totalPages,
         "total_results": totalResults,
       };
+
+  @override
+  List<Object?> get props => [page, results, totalPages, totalResults];
 }
 
-class Result {
+class Result extends Equatable {
   final String? backdropPath;
   final int id;
   final String? originalTitle;
@@ -101,7 +98,7 @@ class Result {
         name: json["name"],
         firstAirDate: json["first_air_date"],
         originCountry: json["origin_country"] == null
-            ? []
+            ? null
             : List<String>.from(json["origin_country"]!.map((x) => x)),
       );
 
@@ -137,6 +134,29 @@ class Result {
         releaseDate: releaseDate ?? firstAirDate,
         type: mediaType,
       );
+
+  @override
+  List<Object?> get props => [
+    backdropPath,
+    id,
+    originalTitle,
+    overview,
+    posterPath,
+    mediaType,
+    adult,
+    title,
+    originalLanguage,
+    genreIds,
+    popularity,
+    releaseDate,
+    video,
+    voteAverage,
+    voteCount,
+    originalName,
+    name,
+    firstAirDate,
+    originCountry,
+  ];
 }
 
 enum MediaType { COLLECTION, MOVIE, TV }

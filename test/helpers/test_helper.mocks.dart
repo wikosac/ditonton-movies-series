@@ -4,8 +4,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i6;
-import 'dart:convert' as _i15;
-import 'dart:typed_data' as _i17;
+import 'dart:convert' as _i18;
+import 'dart:typed_data' as _i20;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:ditonton/core/errors/failure.dart' as _i7;
@@ -17,12 +17,16 @@ import 'package:ditonton/movies/domain/entities/movie.dart' as _i8;
 import 'package:ditonton/movies/domain/entities/movie_detail.dart' as _i9;
 import 'package:ditonton/movies/domain/repositories/movie_repository.dart'
     as _i5;
-import 'package:ditonton/watchlist/data/models/watchlist_table.dart' as _i14;
-import 'package:ditonton/watchlist/data/sources/database_helper.dart' as _i12;
+import 'package:ditonton/search/data/sources/search_data_source.dart' as _i14;
+import 'package:ditonton/search/domain/entities/search.dart' as _i13;
+import 'package:ditonton/search/domain/repositories/search_repository.dart'
+    as _i12;
+import 'package:ditonton/watchlist/data/models/watchlist_table.dart' as _i17;
+import 'package:ditonton/watchlist/data/sources/database_helper.dart' as _i15;
 import 'package:http/http.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i16;
-import 'package:sqflite/sqflite.dart' as _i13;
+import 'package:mockito/src/dummies.dart' as _i19;
+import 'package:sqflite/sqflite.dart' as _i16;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -244,22 +248,68 @@ class MockMovieRemoteDataSource extends _i1.Mock
       ) as _i6.Future<List<_i11.MovieModel>>);
 }
 
+/// A class which mocks [SearchRepository].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSearchRepository extends _i1.Mock implements _i12.SearchRepository {
+  MockSearchRepository() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.Future<_i2.Either<_i7.Failure, List<_i13.Search>>> search(
+          String? query) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #search,
+          [query],
+        ),
+        returnValue:
+            _i6.Future<_i2.Either<_i7.Failure, List<_i13.Search>>>.value(
+                _FakeEither_0<_i7.Failure, List<_i13.Search>>(
+          this,
+          Invocation.method(
+            #search,
+            [query],
+          ),
+        )),
+      ) as _i6.Future<_i2.Either<_i7.Failure, List<_i13.Search>>>);
+}
+
+/// A class which mocks [SearchDataSource].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSearchDataSource extends _i1.Mock implements _i14.SearchDataSource {
+  MockSearchDataSource() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.Future<List<_i13.Search>> search(String? query) => (super.noSuchMethod(
+        Invocation.method(
+          #search,
+          [query],
+        ),
+        returnValue: _i6.Future<List<_i13.Search>>.value(<_i13.Search>[]),
+      ) as _i6.Future<List<_i13.Search>>);
+}
+
 /// A class which mocks [DatabaseHelper].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockDatabaseHelper extends _i1.Mock implements _i12.DatabaseHelper {
+class MockDatabaseHelper extends _i1.Mock implements _i15.DatabaseHelper {
   MockDatabaseHelper() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i6.Future<_i13.Database?> get database => (super.noSuchMethod(
+  _i6.Future<_i16.Database?> get database => (super.noSuchMethod(
         Invocation.getter(#database),
-        returnValue: _i6.Future<_i13.Database?>.value(),
-      ) as _i6.Future<_i13.Database?>);
+        returnValue: _i6.Future<_i16.Database?>.value(),
+      ) as _i6.Future<_i16.Database?>);
 
   @override
-  _i6.Future<int> insertWatchlist(_i14.WatchlistTable? watchlistTable) =>
+  _i6.Future<int> insertWatchlist(_i17.WatchlistTable? watchlistTable) =>
       (super.noSuchMethod(
         Invocation.method(
           #insertWatchlist,
@@ -353,7 +403,7 @@ class MockHttpClient extends _i1.Mock implements _i4.Client {
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i15.Encoding? encoding,
+    _i18.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -384,7 +434,7 @@ class MockHttpClient extends _i1.Mock implements _i4.Client {
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i15.Encoding? encoding,
+    _i18.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -415,7 +465,7 @@ class MockHttpClient extends _i1.Mock implements _i4.Client {
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i15.Encoding? encoding,
+    _i18.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -446,7 +496,7 @@ class MockHttpClient extends _i1.Mock implements _i4.Client {
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i15.Encoding? encoding,
+    _i18.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -483,7 +533,7 @@ class MockHttpClient extends _i1.Mock implements _i4.Client {
           [url],
           {#headers: headers},
         ),
-        returnValue: _i6.Future<String>.value(_i16.dummyValue<String>(
+        returnValue: _i6.Future<String>.value(_i19.dummyValue<String>(
           this,
           Invocation.method(
             #read,
@@ -494,7 +544,7 @@ class MockHttpClient extends _i1.Mock implements _i4.Client {
       ) as _i6.Future<String>);
 
   @override
-  _i6.Future<_i17.Uint8List> readBytes(
+  _i6.Future<_i20.Uint8List> readBytes(
     Uri? url, {
     Map<String, String>? headers,
   }) =>
@@ -504,8 +554,8 @@ class MockHttpClient extends _i1.Mock implements _i4.Client {
           [url],
           {#headers: headers},
         ),
-        returnValue: _i6.Future<_i17.Uint8List>.value(_i17.Uint8List(0)),
-      ) as _i6.Future<_i17.Uint8List>);
+        returnValue: _i6.Future<_i20.Uint8List>.value(_i20.Uint8List(0)),
+      ) as _i6.Future<_i20.Uint8List>);
 
   @override
   _i6.Future<_i4.StreamedResponse> send(_i4.BaseRequest? request) =>
