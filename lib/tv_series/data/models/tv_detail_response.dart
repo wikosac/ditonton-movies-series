@@ -1,14 +1,9 @@
 import 'dart:convert';
 
 import 'package:ditonton/tv_series/domain/entities/tv_series_detail.dart';
+import 'package:equatable/equatable.dart';
 
-TvDetailResponse tvDetailResponseFromJson(String str) =>
-    TvDetailResponse.fromJson(json.decode(str));
-
-String tvDetailResponseToJson(TvDetailResponse data) =>
-    json.encode(data.toJson());
-
-class TvDetailResponse {
+class TvDetailResponse extends Equatable {
   final bool adult;
   final String? backdropPath;
   final List<CreatedBy> createdBy;
@@ -22,7 +17,7 @@ class TvDetailResponse {
   final String lastAirDate;
   final LastEpisodeToAir lastEpisodeToAir;
   final String name;
-  final dynamic nextEpisodeToAir;
+  final LastEpisodeToAir nextEpisodeToAir;
   final List<Network> networks;
   final int numberOfEpisodes;
   final int numberOfSeasons;
@@ -94,7 +89,7 @@ class TvDetailResponse {
         lastEpisodeToAir:
             LastEpisodeToAir.fromJson(json["last_episode_to_air"]),
         name: json["name"],
-        nextEpisodeToAir: json["next_episode_to_air"],
+        nextEpisodeToAir: LastEpisodeToAir.fromJson(json["next_episode_to_air"]),
         networks: List<Network>.from(
             json["networks"].map((x) => Network.fromJson(x))),
         numberOfEpisodes: json["number_of_episodes"],
@@ -135,7 +130,7 @@ class TvDetailResponse {
         "last_air_date": lastAirDate,
         "last_episode_to_air": lastEpisodeToAir.toJson(),
         "name": name,
-        "next_episode_to_air": nextEpisodeToAir,
+        "next_episode_to_air": nextEpisodeToAir.toJson(),
         "networks": List<dynamic>.from(networks.map((x) => x.toJson())),
         "number_of_episodes": numberOfEpisodes,
         "number_of_seasons": numberOfSeasons,
@@ -171,9 +166,45 @@ class TvDetailResponse {
         seasons: seasons.map((item) => item.toEntity()).toList(),
         rating: voteAverage,
       );
+
+  @override
+  List<Object?> get props => [
+    adult,
+    backdropPath,
+    createdBy,
+    episodeRunTime,
+    firstAirDate,
+    genres,
+    homepage,
+    id,
+    inProduction,
+    languages,
+    lastAirDate,
+    lastEpisodeToAir,
+    name,
+    nextEpisodeToAir,
+    networks,
+    numberOfEpisodes,
+    numberOfSeasons,
+    originCountry,
+    originalLanguage,
+    originalName,
+    overview,
+    popularity,
+    posterPath,
+    productionCompanies,
+    productionCountries,
+    seasons,
+    spokenLanguages,
+    status,
+    tagline,
+    type,
+    voteAverage,
+    voteCount,
+  ];
 }
 
-class CreatedBy {
+class CreatedBy extends Equatable {
   final int id;
   final String creditId;
   final String name;
@@ -207,9 +238,19 @@ class CreatedBy {
         "gender": gender,
         "profile_path": profilePath,
       };
+
+  @override
+  List<Object?> get props => [
+   id,
+   creditId,
+   name,
+   originalName,
+   gender,
+   profilePath,
+  ];
 }
 
-class Genre {
+class Genre extends Equatable {
   final int id;
   final String name;
 
@@ -227,15 +268,21 @@ class Genre {
         "id": id,
         "name": name,
       };
+
+  @override
+  List<Object?> get props => [
+    id,
+    name,
+  ];
 }
 
-class LastEpisodeToAir {
+class LastEpisodeToAir extends Equatable {
   final int id;
   final String overview;
   final String name;
   final double voteAverage;
   final int voteCount;
-  final DateTime airDate;
+  final String airDate;
   final int episodeNumber;
   final String episodeType;
   final String productionCode;
@@ -267,7 +314,7 @@ class LastEpisodeToAir {
         name: json["name"],
         voteAverage: json["vote_average"]?.toDouble(),
         voteCount: json["vote_count"],
-        airDate: DateTime.parse(json["air_date"]),
+        airDate: json["air_date"],
         episodeNumber: json["episode_number"],
         episodeType: json["episode_type"],
         productionCode: json["production_code"],
@@ -283,8 +330,7 @@ class LastEpisodeToAir {
         "name": name,
         "vote_average": voteAverage,
         "vote_count": voteCount,
-        "air_date":
-            "${airDate.year.toString().padLeft(4, '0')}-${airDate.month.toString().padLeft(2, '0')}-${airDate.day.toString().padLeft(2, '0')}",
+        "air_date": airDate,
         "episode_number": episodeNumber,
         "episode_type": episodeType,
         "production_code": productionCode,
@@ -293,9 +339,26 @@ class LastEpisodeToAir {
         "show_id": showId,
         "still_path": stillPath,
       };
+
+  @override
+  List<Object?> get props => [
+    id,
+    overview,
+    name,
+    voteAverage,
+    voteCount,
+    airDate,
+    episodeNumber,
+    episodeType,
+    productionCode,
+    runtime,
+    seasonNumber,
+    showId,
+    stillPath,
+  ];
 }
 
-class Network {
+class Network extends Equatable {
   final int id;
   final String? logoPath;
   final String name;
@@ -321,9 +384,17 @@ class Network {
         "name": name,
         "origin_country": originCountry,
       };
+
+  @override
+  List<Object?> get props => [
+    id,
+    logoPath,
+    name,
+    originCountry,
+  ];
 }
 
-class ProductionCountry {
+class ProductionCountry extends Equatable {
   final String iso31661;
   final String name;
 
@@ -342,10 +413,16 @@ class ProductionCountry {
         "iso_3166_1": iso31661,
         "name": name,
       };
+
+  @override
+  List<Object?> get props => [
+    iso31661,
+    name,
+  ];
 }
 
-class Season {
-  final DateTime? airDate;
+class Season extends Equatable {
+  final String? airDate;
   final int episodeCount;
   final int id;
   final String name;
@@ -366,8 +443,7 @@ class Season {
   });
 
   factory Season.fromJson(Map<String, dynamic> json) => Season(
-        airDate:
-            json["air_date"] != null ? DateTime.parse(json["air_date"]) : null,
+        airDate: json["air_date"],
         episodeCount: json["episode_count"],
         id: json["id"],
         name: json["name"],
@@ -378,9 +454,7 @@ class Season {
       );
 
   Map<String, dynamic> toJson() => {
-        "air_date": airDate == null
-            ? null
-            : "${airDate?.year.toString().padLeft(4, '0')}-${airDate?.month.toString().padLeft(2, '0')}-${airDate?.day.toString().padLeft(2, '0')}",
+        "air_date": airDate,
         "episode_count": episodeCount,
         "id": id,
         "name": name,
@@ -395,9 +469,21 @@ class Season {
         name: name,
         seasonNumber: seasonNumber,
       );
+
+  @override
+  List<Object?> get props => [
+    airDate,
+    episodeCount,
+    id,
+    name,
+    overview,
+    posterPath,
+    seasonNumber,
+    voteAverage,
+  ];
 }
 
-class SpokenLanguage {
+class SpokenLanguage extends Equatable {
   final String englishName;
   final String iso6391;
   final String name;
@@ -419,4 +505,11 @@ class SpokenLanguage {
         "iso_639_1": iso6391,
         "name": name,
       };
+
+  @override
+  List<Object?> get props => [
+    englishName,
+    iso6391,
+    name,
+  ];
 }
