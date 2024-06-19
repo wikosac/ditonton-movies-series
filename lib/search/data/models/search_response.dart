@@ -132,7 +132,7 @@ class Result extends Equatable {
         posterPath: backdropPath ?? posterPath,
         title: title ?? name,
         releaseDate: releaseDate ?? firstAirDate,
-        type: mediaType,
+        type: mediaType?.name,
       );
 
   @override

@@ -1,4 +1,3 @@
-import 'package:ditonton/search/data/models/search_response.dart';
 import 'package:equatable/equatable.dart';
 
 class Search extends Equatable {
@@ -14,7 +13,7 @@ class Search extends Equatable {
   final String? posterPath;
   final String? title;
   final String? releaseDate;
-  final MediaType? type;
+  final String? type;
 
   @override
   List<Object?> get props => [id];

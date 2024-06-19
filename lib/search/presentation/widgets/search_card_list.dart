@@ -17,13 +17,13 @@ class SearchCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
         onTap: () {
-          search.type == MediaType.MOVIE
+          search.type == MediaType.MOVIE.name
               ? Navigator.pushNamed(
                   context,
                   MovieDetailPage.ROUTE_NAME,
                   arguments: search.id,
                 )
-              : search.type == MediaType.TV
+              : search.type == MediaType.TV.name
                   ? Navigator.pushNamed(
                       context,
                       TvSeriesDetailPage.ROUTE_NAME,

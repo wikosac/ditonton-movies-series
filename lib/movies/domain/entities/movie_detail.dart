@@ -1,5 +1,4 @@
 import 'package:ditonton/movies/domain/entities/genre.dart';
-import 'package:ditonton/search/data/models/search_response.dart';
 import 'package:ditonton/watchlist/domain/entities/watchlist.dart';
 import 'package:equatable/equatable.dart';
 
@@ -35,7 +34,7 @@ class MovieDetail extends Equatable {
   Watchlist toWatchlist() => Watchlist(
         id: id,
         posterPath: posterPath,
-        mediaType: MediaType.MOVIE.name,
+        mediaType: 'movie',
       );
 
   @override

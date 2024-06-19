@@ -15,7 +15,7 @@ class TvDetailResponse extends Equatable {
   final String lastAirDate;
   final LastEpisodeToAir lastEpisodeToAir;
   final String name;
-  final LastEpisodeToAir nextEpisodeToAir;
+  final LastEpisodeToAir? nextEpisodeToAir;
   final List<Network> networks;
   final int numberOfEpisodes;
   final int numberOfSeasons;
@@ -87,7 +87,9 @@ class TvDetailResponse extends Equatable {
         lastEpisodeToAir:
             LastEpisodeToAir.fromJson(json["last_episode_to_air"]),
         name: json["name"],
-        nextEpisodeToAir: LastEpisodeToAir.fromJson(json["next_episode_to_air"]),
+        nextEpisodeToAir: json["next_episode_to_air"] != null
+            ? LastEpisodeToAir.fromJson(json["next_episode_to_air"])
+            : null,
         networks: List<Network>.from(
             json["networks"].map((x) => Network.fromJson(x))),
         numberOfEpisodes: json["number_of_episodes"],
@@ -128,7 +130,7 @@ class TvDetailResponse extends Equatable {
         "last_air_date": lastAirDate,
         "last_episode_to_air": lastEpisodeToAir.toJson(),
         "name": name,
-        "next_episode_to_air": nextEpisodeToAir.toJson(),
+        "next_episode_to_air": nextEpisodeToAir?.toJson(),
         "networks": List<dynamic>.from(networks.map((x) => x.toJson())),
         "number_of_episodes": numberOfEpisodes,
         "number_of_seasons": numberOfSeasons,
@@ -167,39 +169,39 @@ class TvDetailResponse extends Equatable {
 
   @override
   List<Object?> get props => [
-    adult,
-    backdropPath,
-    createdBy,
-    episodeRunTime,
-    firstAirDate,
-    genres,
-    homepage,
-    id,
-    inProduction,
-    languages,
-    lastAirDate,
-    lastEpisodeToAir,
-    name,
-    nextEpisodeToAir,
-    networks,
-    numberOfEpisodes,
-    numberOfSeasons,
-    originCountry,
-    originalLanguage,
-    originalName,
-    overview,
-    popularity,
-    posterPath,
-    productionCompanies,
-    productionCountries,
-    seasons,
-    spokenLanguages,
-    status,
-    tagline,
-    type,
-    voteAverage,
-    voteCount,
-  ];
+        adult,
+        backdropPath,
+        createdBy,
+        episodeRunTime,
+        firstAirDate,
+        genres,
+        homepage,
+        id,
+        inProduction,
+        languages,
+        lastAirDate,
+        lastEpisodeToAir,
+        name,
+        nextEpisodeToAir,
+        networks,
+        numberOfEpisodes,
+        numberOfSeasons,
+        originCountry,
+        originalLanguage,
+        originalName,
+        overview,
+        popularity,
+        posterPath,
+        productionCompanies,
+        productionCountries,
+        seasons,
+        spokenLanguages,
+        status,
+        tagline,
+        type,
+        voteAverage,
+        voteCount,
+      ];
 }
 
 class CreatedBy extends Equatable {
@@ -239,13 +241,13 @@ class CreatedBy extends Equatable {
 
   @override
   List<Object?> get props => [
-   id,
-   creditId,
-   name,
-   originalName,
-   gender,
-   profilePath,
-  ];
+        id,
+        creditId,
+        name,
+        originalName,
+        gender,
+        profilePath,
+      ];
 }
 
 class Genre extends Equatable {
@@ -269,9 +271,9 @@ class Genre extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    name,
-  ];
+        id,
+        name,
+      ];
 }
 
 class LastEpisodeToAir extends Equatable {
@@ -340,20 +342,20 @@ class LastEpisodeToAir extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    overview,
-    name,
-    voteAverage,
-    voteCount,
-    airDate,
-    episodeNumber,
-    episodeType,
-    productionCode,
-    runtime,
-    seasonNumber,
-    showId,
-    stillPath,
-  ];
+        id,
+        overview,
+        name,
+        voteAverage,
+        voteCount,
+        airDate,
+        episodeNumber,
+        episodeType,
+        productionCode,
+        runtime,
+        seasonNumber,
+        showId,
+        stillPath,
+      ];
 }
 
 class Network extends Equatable {
@@ -385,11 +387,11 @@ class Network extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    logoPath,
-    name,
-    originCountry,
-  ];
+        id,
+        logoPath,
+        name,
+        originCountry,
+      ];
 }
 
 class ProductionCountry extends Equatable {
@@ -414,9 +416,9 @@ class ProductionCountry extends Equatable {
 
   @override
   List<Object?> get props => [
-    iso31661,
-    name,
-  ];
+        iso31661,
+        name,
+      ];
 }
 
 class Season extends Equatable {
@@ -470,15 +472,15 @@ class Season extends Equatable {
 
   @override
   List<Object?> get props => [
-    airDate,
-    episodeCount,
-    id,
-    name,
-    overview,
-    posterPath,
-    seasonNumber,
-    voteAverage,
-  ];
+        airDate,
+        episodeCount,
+        id,
+        name,
+        overview,
+        posterPath,
+        seasonNumber,
+        voteAverage,
+      ];
 }
 
 class SpokenLanguage extends Equatable {
@@ -506,8 +508,8 @@ class SpokenLanguage extends Equatable {
 
   @override
   List<Object?> get props => [
-    englishName,
-    iso6391,
-    name,
-  ];
+        englishName,
+        iso6391,
+        name,
+      ];
 }

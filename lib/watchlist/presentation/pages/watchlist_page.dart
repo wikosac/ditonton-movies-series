@@ -3,7 +3,6 @@ import 'package:ditonton/core/utils/constants.dart';
 import 'package:ditonton/core/utils/state_enum.dart';
 import 'package:ditonton/core/utils/utils.dart';
 import 'package:ditonton/movies/presentation/pages/movie_detail_page.dart';
-import 'package:ditonton/search/data/models/search_response.dart';
 import 'package:ditonton/tv_series/presentation/pages/tv_series_detail_page.dart';
 import 'package:ditonton/watchlist/presentation/provider/watchlist_notifier.dart';
 import 'package:flutter/material.dart';
@@ -50,41 +49,47 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
               child: CircularProgressIndicator(),
             );
           } else if (data.watchlistState == RequestState.Loaded) {
-            return AlignedGridView.count(
-              crossAxisCount: 3,
-              mainAxisSpacing: 4,
-              crossAxisSpacing: 4,
-              itemCount: data.watchlist.length,
-              itemBuilder: (context, index) {
-                final watchlist = data.watchlist[index];
-                return InkWell(
-                  onTap: () {
-                    watchlist.mediaType == MediaType.MOVIE.name
-                        ? Navigator.pushNamed(
-                            context,
-                            MovieDetailPage.ROUTE_NAME,
-                            arguments: watchlist.id,
-                          )
-                        : Navigator.pushNamed(
-                            context,
-                            TvSeriesDetailPage.ROUTE_NAME,
-                            arguments: watchlist.id,
-                          );
-                  },
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    child: CachedNetworkImage(
-                      imageUrl: '$BASE_IMAGE_URL${watchlist.posterPath}',
-                      placeholder: (context, url) => Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                );
-              },
-            );
+            final result = data.watchlist;
+            return result.isNotEmpty
+                ? AlignedGridView.count(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 4,
+                    crossAxisSpacing: 4,
+                    itemCount: result.length,
+                    itemBuilder: (context, index) {
+                      final watchlist = result[index];
+                      return InkWell(
+                        onTap: () {
+                          watchlist.mediaType == 'tv'
+                              ? Navigator.pushNamed(
+                                  context,
+                                  TvSeriesDetailPage.ROUTE_NAME,
+                                  arguments: watchlist.id,
+                                )
+                              : Navigator.pushNamed(
+                                  context,
+                                  MovieDetailPage.ROUTE_NAME,
+                                  arguments: watchlist.id,
+                                );
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          child: CachedNetworkImage(
+                            imageUrl: '$BASE_IMAGE_URL${watchlist.posterPath}',
+                            placeholder: (context, url) => Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      );
+                    },
+                  )
+                : Center(
+                    child: Text('No data'),
+                  );
           } else {
             return Center(
               key: Key('error_message'),

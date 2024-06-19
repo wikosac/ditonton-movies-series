@@ -45,16 +45,20 @@ class SearchPage extends StatelessWidget {
                   );
                 } else if (data.state == RequestState.Loaded) {
                   final result = data.searchResult;
-                  return Expanded(
-                    child: ListView.builder(
-                      padding: const EdgeInsets.all(8),
-                      itemBuilder: (context, index) {
-                        final movie = data.searchResult[index];
-                        return SearchCard(movie);
-                      },
-                      itemCount: result.length,
-                    ),
-                  );
+                  return result.isNotEmpty
+                      ? Expanded(
+                          child: ListView.builder(
+                            padding: const EdgeInsets.all(8),
+                            itemBuilder: (context, index) {
+                              final movie = result[index];
+                              return SearchCard(movie);
+                            },
+                            itemCount: result.length,
+                          ),
+                        )
+                      : Center(
+                          child: Text('No data'),
+                        );
                 } else {
                   return Center(
                     child: Text(
