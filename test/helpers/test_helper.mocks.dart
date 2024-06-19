@@ -669,17 +669,17 @@ class MockWatchlistDataSource extends _i1.Mock
   }
 
   @override
-  _i9.Future<String> insertWatchlist(_i26.WatchlistTable? movie) =>
+  _i9.Future<String> insertWatchlist(_i26.WatchlistTable? watchlist) =>
       (super.noSuchMethod(
         Invocation.method(
           #insertWatchlist,
-          [movie],
+          [watchlist],
         ),
         returnValue: _i9.Future<String>.value(_i27.dummyValue<String>(
           this,
           Invocation.method(
             #insertWatchlist,
-            [movie],
+            [watchlist],
           ),
         )),
       ) as _i9.Future<String>);

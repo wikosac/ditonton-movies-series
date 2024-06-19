@@ -86,7 +86,7 @@ void main() {
     ],
     "original_language": "en",
     "original_name": "The Boys",
-    "overview": "A group of vigilantes known informally as “The Boys” set out to take down corrupt superheroes with no more than blue-collar grit and a willingness to fight dirty.",
+    "overview": "A group of vigilantes known informally as \"The Boys\" set out to take down corrupt superheroes with no more than blue-collar grit and a willingness to fight dirty.",
     "popularity": 2783.39,
     "poster_path": "/2zmTngn1tYC1AvfnrFLhxeD82hz.jpg",
     "production_companies": [

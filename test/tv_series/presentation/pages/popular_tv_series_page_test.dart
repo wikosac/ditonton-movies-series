@@ -1,7 +1,4 @@
 import 'package:ditonton/core/utils/state_enum.dart';
-import 'package:ditonton/tv_series/presentation/pages/now_playing_tv_series_page.dart';
-import 'package:ditonton/tv_series/presentation/pages/popular_tv_series_page.dart';
-import 'package:ditonton/tv_series/presentation/pages/popular_tv_series_page.dart';
 import 'package:ditonton/tv_series/presentation/pages/popular_tv_series_page.dart';
 import 'package:ditonton/tv_series/presentation/provider/popular_tv_series_notifier.dart';
 import 'package:flutter/material.dart';

@@ -55,6 +55,7 @@ class SearchCard extends StatelessWidget {
               ),
             ),
             Container(
+              key: Key('search_card_content'),
               margin: const EdgeInsets.only(
                 left: 16,
                 bottom: 16,

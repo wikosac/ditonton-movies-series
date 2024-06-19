@@ -14,8 +14,12 @@ class WatchlistRepositoryImpl implements WatchlistRepository {
 
   @override
   ResultFuture<List<Watchlist>> getWatchlist() async {
-    final result = await watchlistDataSource.getWatchlist();
-    return Right(result.map((item) => item.toWatchlist()).toList());
+    try {
+      final result = await watchlistDataSource.getWatchlist();
+      return Right(result.map((item) => item.toWatchlist()).toList());
+    } on DatabaseException catch (e) {
+      return Left(DatabaseFailure(e.message));
+    }
   }
 
   @override
@@ -42,8 +46,6 @@ class WatchlistRepositoryImpl implements WatchlistRepository {
       return Right(result);
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));
-    } catch (e) {
-      throw e;
     }
   }
 }

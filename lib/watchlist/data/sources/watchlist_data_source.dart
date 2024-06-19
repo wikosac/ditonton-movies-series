@@ -1,3 +1,4 @@
+import 'package:ditonton/core/errors/exception.dart';
 import 'package:ditonton/core/utils/constants.dart';
 import 'package:ditonton/watchlist/data/models/watchlist_table.dart';
 import 'package:ditonton/watchlist/data/sources/database_helper.dart';
@@ -23,7 +24,7 @@ class WatchlistDataSourceImpl implements WatchlistDataSource {
       final result = await databaseHelper.getWatchlist();
       return result.map((item) => WatchlistTable.fromMap(item)).toList();
     } on Exception catch (e) {
-      throw e;
+      throw DatabaseException(e.toString());
     }
   }
 
@@ -34,10 +35,10 @@ class WatchlistDataSourceImpl implements WatchlistDataSource {
       if (result != 0) {
         return WATCHLIST_ADD_MESSAGE;
       } else {
-        return 'Failed';
+        throw DatabaseException('Failed');
       }
-    } catch (e) {
-      return e.toString();
+    } on Exception catch (e) {
+      throw DatabaseException(e.toString());
     }
   }
 
@@ -48,16 +49,16 @@ class WatchlistDataSourceImpl implements WatchlistDataSource {
       if (result != 0){
         return WATCHLIST_REMOVE_MESSAGE;
       } else {
-        return 'Failed';
+        throw DatabaseException('Failed');
       }
     } on Exception catch (e) {
-      return e.toString();
+      throw DatabaseException(e.toString());
     }
   }
 }
 
 abstract class WatchlistDataSource {
-  Future<String> insertWatchlist(WatchlistTable movie);
+  Future<String> insertWatchlist(WatchlistTable watchlist);
 
   Future<String> removeWatchlist(int id);
 
