@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">0</td>
             <td class="headerCovTableEntry">3</td>
-            <td class="headerCovTableEntryLo">0.0 %</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">Tue Jun 18 01:42:06 2024</td>
+            <td class="headerValue">Wed Jun 19 20:22:35 2024</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -66,10 +66,10 @@
 <a name="4"><span class="lineNum">       4 </span>            : class RemoveWatchlist {</a>
 <a name="5"><span class="lineNum">       5 </span>            :   final WatchlistRepository watchlistRepository;</a>
 <a name="6"><span class="lineNum">       6 </span>            : </a>
-<a name="7"><span class="lineNum">       7 </span><span class="lineNoCov">          0 :   RemoveWatchlist(this.watchlistRepository);</span></a>
+<a name="7"><span class="lineNum">       7 </span><span class="lineCov">          1 :   RemoveWatchlist(this.watchlistRepository);</span></a>
 <a name="8"><span class="lineNum">       8 </span>            : </a>
-<a name="9"><span class="lineNum">       9 </span><span class="lineNoCov">          0 :   ResultFuture&lt;String&gt; execute(int id) {</span></a>
-<a name="10"><span class="lineNum">      10 </span><span class="lineNoCov">          0 :     return watchlistRepository.removeWatchlist(id);</span></a>
+<a name="9"><span class="lineNum">       9 </span><span class="lineCov">          1 :   ResultFuture&lt;String&gt; execute(int id) {</span></a>
+<a name="10"><span class="lineNum">      10 </span><span class="lineCov">          2 :     return watchlistRepository.removeWatchlist(id);</span></a>
 <a name="11"><span class="lineNum">      11 </span>            :   }</a>
 <a name="12"><span class="lineNum">      12 </span>            : }</a>
 </pre>
