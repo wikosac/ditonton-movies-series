@@ -1,7 +1,6 @@
 import 'package:core/core.dart';
 
 import '../entities/episode.dart';
-import '../entities/tv_series.dart';
 import '../repositories/tv_series_repository.dart';
 
 class GetTvSeriesSeason {

@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:dartz/dartz.dart';
 import 'package:core/errors/exception.dart';
 import 'package:core/errors/failure.dart';
+import 'package:dartz/dartz.dart';
 
 import '../../domain/entities/movie.dart';
 import '../../domain/entities/movie_detail.dart';
