@@ -3,60 +3,59 @@ import 'package:core/core.dart';
 import 'package:ditonton/injection.dart' as di;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/movies.dart';
-import 'package:provider/provider.dart';
 import 'package:search/search.dart';
 import 'package:tv_series/tv_series.dart';
 import 'package:watchlist/watchlist.dart';
 
 void main() {
   di.init();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieListNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<MovieDetailCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieDetailNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<TvDetailCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvSeriesListNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<TvSeasonCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvSeriesDetailNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<SearchCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvSeriesSeasonNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<TopRatedMoviesCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<SearchNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<NowPlayingMoviesCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedMoviesNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<NowPlayingTvCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<NowPlayingMoviesNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<PopularMoviesCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<NowPlayingTvSeriesNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<TopRatedTvCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularMoviesNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<PopularTvCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedTvSeriesNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<WatchlistCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularTvSeriesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<WatchlistCubit>(),
         ),
       ],
       child: MaterialApp(
@@ -74,7 +73,7 @@ class MyApp extends StatelessWidget {
             case '/home':
               return MaterialPageRoute(builder: (_) => HomeMoviePage());
             case NOW_PLAYING_MOVIES_ROUTE:
-              return CupertinoPageRoute(builder: (_) => NowPlayingMoviesPage());
+              return CupertinoPageRoute(builder: (_) => const NowPlayingMoviesPage());
             case POPULAR_MOVIES_ROUTE:
               return CupertinoPageRoute(builder: (_) => PopularMoviesPage());
             case TOP_RATED_MOVIES_ROUTE:
@@ -103,10 +102,10 @@ class MyApp extends StatelessWidget {
             case WATCHLIST_ROUTE:
               return MaterialPageRoute(builder: (_) => WatchlistPage());
             case ABOUT_ROUTE:
-              return MaterialPageRoute(builder: (_) => AboutPage());
+              return MaterialPageRoute(builder: (_) => const AboutPage());
             default:
               return MaterialPageRoute(builder: (_) {
-                return Scaffold(
+                return const Scaffold(
                   body: Center(
                     child: Text('Page not found :('),
                   ),

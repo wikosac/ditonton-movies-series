@@ -6,4 +6,4 @@ export 'domain/entities/search.dart';
 export 'domain/repositories/search_repository.dart';
 export 'domain/usecases/search_usecase.dart';
 export 'presentation/pages/search_page.dart';
-export 'presentation/provider/search_notifier.dart';
+export 'presentation/cubit/search_cubit.dart';
