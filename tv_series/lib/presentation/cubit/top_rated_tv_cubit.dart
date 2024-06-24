@@ -9,13 +9,13 @@ class TopRatedTvCubit extends Cubit<TopRatedTvState> {
 
   final GetTopRatedTvSeries _getTopRatedTvSeries;
 
-  void fetchOnTheAirTvSeries() async {
-    emit(TopRatedTvSeriesLoading());
+  void fetchTopRatedTvSeries() async {
+    emit(TopRatedTvLoading());
     final result = await _getTopRatedTvSeries.call();
     result.fold((failure) async {
-      emit(TopRatedTvSeriesError(failure.message));
+      emit(TopRatedTvError(failure.message));
     }, (data) async {
-      emit(TopRatedTvSeriesLoaded(data));
+      emit(TopRatedTvLoaded(data));
     });
   }
 }

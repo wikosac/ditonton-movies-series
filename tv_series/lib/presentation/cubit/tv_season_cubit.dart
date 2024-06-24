@@ -9,10 +9,10 @@ class TvSeasonCubit extends Cubit<TvSeasonState> {
 
   final GetTvSeriesSeason _getTvSeriesSeason;
 
-  void fetchEpisodeTv(int id, int season) async {
+  void fetchEpisodeTv(int id, int seasonNumber) async {
     emit(TvSeasonLoading());
 
-    final result = await _getTvSeriesSeason.call(id, season);
+    final result = await _getTvSeriesSeason.call(id, seasonNumber);
     result.fold(
       (failure) async {
         emit(TvSeasonError(failure.message));

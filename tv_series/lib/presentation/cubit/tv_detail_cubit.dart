@@ -22,10 +22,10 @@ class TvDetailCubit extends Cubit<TvDetailState> {
     detailResult.fold((failure) async {
       emit(TvDetailError(failure.message));
     }, (detail) async {
-      emit(TvSeriesRecommendationLoading());
+      emit(TvDetailRecommendationsLoading());
       recommendationResult.fold(
         (failure) async {
-          emit(TvSeriesRecommendationError(detail, const [], failure.message));
+          emit(TvDetailRecommendationsError(failure.message));
         },
         (recommendation) async {
           emit(TvDetailLoaded(detail, recommendation));

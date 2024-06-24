@@ -1,23 +1,24 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:provider/provider.dart';
-
-import '../provider/watchlist_notifier.dart';
+import 'package:watchlist/watchlist.dart';
 
 class WatchlistPage extends StatefulWidget {
+  const WatchlistPage({super.key});
+
   @override
-  _WatchlistPageState createState() => _WatchlistPageState();
+  WatchlistPageState createState() => WatchlistPageState();
 }
 
-class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
+class WatchlistPageState extends State<WatchlistPage> with RouteAware {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<WatchlistNotifier>(context, listen: false)
-            .fetchWatchlistMovies());
+    Future.microtask(
+      () => context.read<WatchlistCubit>().fetchWatchlist(),
+    );
   }
 
   @override
@@ -26,33 +27,33 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
     routeObserver.subscribe(this, ModalRoute.of(context)!);
   }
 
+  @override
   void didPopNext() {
-    Provider.of<WatchlistNotifier>(context, listen: false)
-        .fetchWatchlistMovies();
+    context.read<WatchlistCubit>().fetchWatchlist();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Watchlist'),
+        title: const Text('Watchlist'),
       ),
-      body: Consumer<WatchlistNotifier>(
-        builder: (context, data, child) {
-          if (data.watchlistState == RequestState.Loading) {
-            return Center(
+      body: BlocBuilder<WatchlistCubit, WatchlistState>(
+        builder: (context, state) {
+          if (state is WatchlistLoading) {
+            return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (data.watchlistState == RequestState.Loaded) {
-            final result = data.watchlist;
-            return result.isNotEmpty
+          } else if (state is WatchlistLoaded) {
+            final items = state.watchlist;
+            return items.isNotEmpty
                 ? AlignedGridView.count(
                     crossAxisCount: 3,
                     mainAxisSpacing: 4,
                     crossAxisSpacing: 4,
-                    itemCount: result.length,
+                    itemCount: items.length,
                     itemBuilder: (context, index) {
-                      final watchlist = result[index];
+                      final watchlist = items[index];
                       return InkWell(
                         onTap: () {
                           watchlist.mediaType == 'TV'
@@ -68,28 +69,31 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
                                 );
                         },
                         child: ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(4)),
                           child: CachedNetworkImage(
                             imageUrl: '$BASE_IMAGE_URL${watchlist.posterPath}',
-                            placeholder: (context, url) => Center(
+                            placeholder: (context, url) => const Center(
                               child: CircularProgressIndicator(),
                             ),
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                const Icon(Icons.error),
                             fit: BoxFit.contain,
                           ),
                         ),
                       );
                     },
                   )
-                : Center(
+                : const Center(
                     child: Text('No data'),
                   );
-          } else {
+          } else if (state is WatchlistError) {
             return Center(
-              key: Key('error_message'),
-              child: Text(data.message),
+              key: const Key('error_message'),
+              child: Text(state.message),
             );
+          } else {
+            return const SizedBox();
           }
         },
       ),

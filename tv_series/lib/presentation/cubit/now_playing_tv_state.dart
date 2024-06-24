@@ -9,10 +9,10 @@ sealed class NowPlayingTvState extends Equatable {
 
 final class NowPlayingTvInitial extends NowPlayingTvState {}
 
-final class NowPlayingTvSeriesLoading extends NowPlayingTvState {}
+final class NowPlayingTvLoading extends NowPlayingTvState {}
 
-final class NowPlayingTvSeriesLoaded extends NowPlayingTvState {
-  const NowPlayingTvSeriesLoaded(this.series);
+final class NowPlayingTvLoaded extends NowPlayingTvState {
+  const NowPlayingTvLoaded(this.series);
 
   final List<TvSeries> series;
 
@@ -20,8 +20,8 @@ final class NowPlayingTvSeriesLoaded extends NowPlayingTvState {
   List<Object> get props => [series];
 }
 
-final class NowPlayingTvSeriesError extends NowPlayingTvState {
-  const NowPlayingTvSeriesError(this.message);
+final class NowPlayingTvError extends NowPlayingTvState {
+  const NowPlayingTvError(this.message);
 
   final String message;
 

@@ -1,23 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies/movies.dart';
 import 'package:tv_series/presentation/pages/tv_series_home_page.dart';
 
-import '../../domain/entities/movie.dart';
-import '../provider/movie_list_notifier.dart';
-
 class HomeMoviePage extends StatefulWidget {
+  const HomeMoviePage({super.key});
+
   @override
-  _HomeMoviePageState createState() => _HomeMoviePageState();
+  HomeMoviePageState createState() => HomeMoviePageState();
 }
 
-class _HomeMoviePageState extends State<HomeMoviePage> {
+class HomeMoviePageState extends State<HomeMoviePage> {
   int _selectedIndex = 0;
 
-  List<Widget> _widgetOptions = <Widget>[
-    HomeContent(),
-    TvSeriesHomePage(),
+  final List<Widget> _widgetOptions = <Widget>[
+    const HomeContent(),
+    const TvSeriesHomePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -29,11 +29,11 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => Provider.of<MovieListNotifier>(context, listen: false)
-          ..fetchNowPlayingMovies()
-          ..fetchPopularMovies()
-          ..fetchTopRatedMovies());
+    Future.microtask(() {
+      context.read<NowPlayingMoviesCubit>().fetchNowPlayingMovies();
+      context.read<PopularMoviesCubit>().fetchPopularMovies();
+      context.read<TopRatedMoviesCubit>().fetchTopRatedMovies();
+    });
   }
 
   @override
@@ -85,10 +85,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
         ],
       ),
       body: Stack(
-        children: [
-          _widgetOptions.elementAt(_selectedIndex),
-          _buildNavbar()
-        ],
+        children: [_widgetOptions.elementAt(_selectedIndex), _buildNavbar()],
       ),
     );
   }
@@ -127,6 +124,8 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
 }
 
 class HomeContent extends StatelessWidget {
+  const HomeContent({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -140,50 +139,54 @@ class HomeContent extends StatelessWidget {
               onTap: () =>
                   Navigator.pushNamed(context, NOW_PLAYING_MOVIES_ROUTE),
             ),
-            Consumer<MovieListNotifier>(builder: (context, data, child) {
-              final state = data.nowPlayingState;
-              if (state == RequestState.Loading) {
+            BlocBuilder<NowPlayingMoviesCubit, NowPlayingMoviesState>(
+                builder: (context, state) {
+              if (state is NowPlayingMoviesLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if (state == RequestState.Loaded) {
-                return MovieList(data.nowPlayingMovies);
+              } else if (state is NowPlayingMoviesLoaded) {
+                return MovieList(state.movies);
+              } else if (state is NowPlayingMoviesError) {
+                return Text(state.message);
               } else {
-                return const Text('Failed');
+                return const SizedBox();
               }
             }),
             _buildSubHeading(
               title: 'Popular',
-              onTap: () =>
-                  Navigator.pushNamed(context, POPULAR_MOVIES_ROUTE),
+              onTap: () => Navigator.pushNamed(context, POPULAR_MOVIES_ROUTE),
             ),
-            Consumer<MovieListNotifier>(builder: (context, data, child) {
-              final state = data.popularMoviesState;
-              if (state == RequestState.Loading) {
+            BlocBuilder<PopularMoviesCubit, PopularMoviesState>(
+                builder: (context, state) {
+              if (state is PopularMoviesLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if (state == RequestState.Loaded) {
-                return MovieList(data.popularMovies);
+              } else if (state is PopularMoviesLoaded) {
+                return MovieList(state.movies);
+              } else if (state is PopularMoviesError) {
+                return Text(state.message);
               } else {
-                return const Text('Failed');
+                return const SizedBox();
               }
             }),
             _buildSubHeading(
               title: 'Top Rated',
-              onTap: () =>
-                  Navigator.pushNamed(context, TOP_RATED_MOVIES_ROUTE),
+              onTap: () => Navigator.pushNamed(context, TOP_RATED_MOVIES_ROUTE),
             ),
-            Consumer<MovieListNotifier>(builder: (context, data, child) {
-              final state = data.topRatedMoviesState;
-              if (state == RequestState.Loading) {
+            BlocBuilder<TopRatedMoviesCubit, TopRatedMoviesState>(
+                builder: (context, state) {
+              if (state is TopRatedMoviesLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if (state == RequestState.Loaded) {
-                return MovieList(data.topRatedMovies);
+              } else if (state is TopRatedMoviesLoaded) {
+                return MovieList(state.movies);
+              } else if (state is TopRatedMoviesError) {
+                return Text(state.message);
               } else {
-                return const Text('Failed');
+                return const SizedBox();
               }
             }),
             const SizedBox(height: 84),
@@ -216,11 +219,11 @@ class HomeContent extends StatelessWidget {
 class MovieList extends StatelessWidget {
   final List<Movie> movies;
 
-  MovieList(this.movies);
+  const MovieList(this.movies, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,

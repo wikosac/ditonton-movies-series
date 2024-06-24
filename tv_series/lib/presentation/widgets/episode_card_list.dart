@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:tv_series/tv_series.dart';
 
 import '../provider/tv_series_season_notifier.dart';
 
@@ -26,25 +28,24 @@ class _EpisodeCardListState extends State<EpisodeCardList>
   void initState() {
     super.initState();
     Future.microtask(() {
-      Provider.of<TvSeriesSeasonNotifier>(context, listen: false)
-          .fetchTvSeriesSeason(widget.id, widget.seasonNumber);
+      context.read<TvSeasonCubit>().fetchEpisodeTv(widget.id, widget.seasonNumber);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TvSeriesSeasonNotifier>(
-      builder: (context, provider, child) {
-        if (provider.episodeState == RequestState.Loading) {
+    return BlocBuilder<TvSeasonCubit, TvSeasonState>(
+      builder: (context, state) {
+        if (state is TvSeasonLoading) {
           return const Center(
             child: CircularProgressIndicator(),
           );
-        } else if (provider.episodeState == RequestState.Loaded) {
-          return provider.episodes.isNotEmpty
+        } else if (state is TvSeasonLoaded) {
+          return state.episodes.isNotEmpty
               ? ListView.builder(
-                  itemCount: provider.episodes.length,
+                  itemCount: state.episodes.length,
                   itemBuilder: (context, index) {
-                    final episode = provider.episodes[index];
+                    final episode = state.episodes[index];
                     return Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -98,11 +99,13 @@ class _EpisodeCardListState extends State<EpisodeCardList>
                     );
                   },
                 )
-              : Center(child: Text('No data'));
-        } else {
+              : const Center(child: Text('No data'));
+        } else if (state is TvSeasonError) {
           return Center(
-            child: Text(provider.message),
+            child: Text(state.message),
           );
+        } else {
+          return const SizedBox();
         }
       },
     );

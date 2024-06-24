@@ -9,13 +9,13 @@ class NowPlayingTvCubit extends Cubit<NowPlayingTvState> {
 
   final GetNowPlayingTvSeries _getNowPlayingTvSeries;
 
-  void fetchOnTheAirTvSeries() async {
-    emit(NowPlayingTvSeriesLoading());
+  void fetchNowPlayingTvSeries() async {
+    emit(NowPlayingTvLoading());
     final result = await _getNowPlayingTvSeries.call();
     result.fold((failure) async {
-      emit(NowPlayingTvSeriesError(failure.message));
+      emit(NowPlayingTvError(failure.message));
     }, (data) async {
-      emit(NowPlayingTvSeriesLoaded(data));
+      emit(NowPlayingTvLoaded(data));
     });
   }
 }

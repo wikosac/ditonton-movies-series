@@ -30,19 +30,13 @@ final class TvDetailError extends TvDetailState {
   List<Object> get props => [message];
 }
 
-final class TvSeriesRecommendationLoading extends TvDetailState {}
+final class TvDetailRecommendationsLoading extends TvDetailState {}
 
-final class TvSeriesRecommendationError extends TvDetailState {
-  const TvSeriesRecommendationError(
-    this.tvDetail,
-    this.recommendationsTvSeries,
-    this.message,
-  );
+final class TvDetailRecommendationsError extends TvDetailState {
+  const TvDetailRecommendationsError(this.message);
 
-  final TvSeriesDetail tvDetail;
-  final List<TvSeries> recommendationsTvSeries;
   final String message;
 
   @override
-  List<Object> get props => [tvDetail, recommendationsTvSeries, message];
+  List<Object> get props => [message];
 }

@@ -9,10 +9,10 @@ sealed class TopRatedTvState extends Equatable {
 
 final class TopRatedTvInitial extends TopRatedTvState {}
 
-final class TopRatedTvSeriesLoading extends TopRatedTvState {}
+final class TopRatedTvLoading extends TopRatedTvState {}
 
-final class TopRatedTvSeriesLoaded extends TopRatedTvState {
-  const TopRatedTvSeriesLoaded(this.series);
+final class TopRatedTvLoaded extends TopRatedTvState {
+  const TopRatedTvLoaded(this.series);
 
   final List<TvSeries> series;
 
@@ -20,8 +20,8 @@ final class TopRatedTvSeriesLoaded extends TopRatedTvState {
   List<Object> get props => [series];
 }
 
-final class TopRatedTvSeriesError extends TopRatedTvState {
-  const TopRatedTvSeriesError(this.message);
+final class TopRatedTvError extends TopRatedTvState {
+  const TopRatedTvError(this.message);
 
   final String message;
 

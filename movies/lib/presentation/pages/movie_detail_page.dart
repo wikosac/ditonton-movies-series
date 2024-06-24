@@ -253,7 +253,7 @@ class DetailContent extends StatelessWidget {
             ? ElevatedButton(
                 onPressed: () async {
                   if (!state.isWatchlist) {
-                    cubit.addWatchlist(movie);
+                    cubit.addWatchlist(movie.toWatchlist());
                   } else {
                     cubit.removeWatchlist(movie.id);
                   }

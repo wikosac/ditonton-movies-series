@@ -33,14 +33,14 @@ class WatchlistCubit extends Cubit<WatchlistState> {
     emit(WatchlistStatus(result));
   }
 
-  void addWatchlist(MovieDetail movie) async {
-    final result = await _saveWatchlist.execute(movie.toWatchlist());
+  void addWatchlist(Watchlist watchlist) async {
+    final result = await _saveWatchlist.execute(watchlist);
     await result.fold((failure) async {
       emit(WatchlistError(failure.message));
     }, (message) async {
       emit(WatchlistSuccess(message));
     });
-    checkWatchlistStatus(movie.id);
+    checkWatchlistStatus(watchlist.id);
   }
 
   void removeWatchlist(int id) async {

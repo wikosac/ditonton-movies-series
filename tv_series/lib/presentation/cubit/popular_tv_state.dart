@@ -9,10 +9,10 @@ sealed class PopularTvState extends Equatable {
 
 final class PopularTvInitial extends PopularTvState {}
 
-final class PopularTvSeriesLoading extends PopularTvState {}
+final class PopularTvLoading extends PopularTvState {}
 
-final class PopularTvSeriesLoaded extends PopularTvState {
-  const PopularTvSeriesLoaded(this.series);
+final class PopularTvLoaded extends PopularTvState {
+  const PopularTvLoaded(this.series);
 
   final List<TvSeries> series;
 
@@ -20,8 +20,8 @@ final class PopularTvSeriesLoaded extends PopularTvState {
   List<Object> get props => [series];
 }
 
-final class PopularTvSeriesError extends PopularTvState {
-  const PopularTvSeriesError(this.message);
+final class PopularTvError extends PopularTvState {
+  const PopularTvError(this.message);
 
   final String message;
 

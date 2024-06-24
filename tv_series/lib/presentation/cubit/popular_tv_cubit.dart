@@ -9,13 +9,13 @@ class PopularTvCubit extends Cubit<PopularTvState> {
 
   final GetPopularTvSeries _getPopularTvSeries;
 
-  void fetchOnTheAirTvSeries() async {
-    emit(PopularTvSeriesLoading());
+  void fetchPopularTvSeries() async {
+    emit(PopularTvLoading());
     final result = await _getPopularTvSeries.call();
     result.fold((failure) async {
-      emit(PopularTvSeriesError(failure.message));
+      emit(PopularTvError(failure.message));
     }, (data) async {
-      emit(PopularTvSeriesLoaded(data));
+      emit(PopularTvLoaded(data));
     });
   }
 }
