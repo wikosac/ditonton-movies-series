@@ -1,5 +1,3 @@
-
-
 import 'package:movies/data/models/movie_table.dart';
 import 'package:movies/domain/entities/genre.dart';
 import 'package:movies/domain/entities/movie.dart';

@@ -3,13 +3,13 @@
 import 'package:watchlist/data/models/watchlist_table.dart';
 import 'package:watchlist/domain/entities/watchlist.dart';
 
-final dummyWatchlistTable = WatchlistTable(
+const dummyWatchlistTable = WatchlistTable(
   id: 1,
   posterPath: '',
   mediaType: '',
 );
 
-final dummyWatchlist = Watchlist(
+const dummyWatchlist = Watchlist(
   id: 1,
   posterPath: '',
   mediaType: '',

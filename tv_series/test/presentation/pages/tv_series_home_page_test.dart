@@ -1,27 +1,32 @@
-
-import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
-import 'package:tv_series/presentation/pages/tv_series_home_page.dart';
-import 'package:tv_series/presentation/provider/tv_series_list_notifier.dart';
+import 'package:tv_series/tv_series.dart';
 
 import '../../dummy/dummy_objects.dart';
 import 'tv_series_home_page_test.mocks.dart';
 
-@GenerateMocks([TvSeriesListNotifier])
+@GenerateMocks([NowPlayingTvCubit, PopularTvCubit, TopRatedTvCubit])
 void main() {
-  late MockTvSeriesListNotifier mockNotifier;
+  late MockNowPlayingTvCubit mockNowPlayingTvCubit;
+  late MockPopularTvCubit mockPopularTvCubit;
+  late MockTopRatedTvCubit mockTopRatedTvCubit;
 
   setUp(() {
-    mockNotifier = MockTvSeriesListNotifier();
+    mockNowPlayingTvCubit = MockNowPlayingTvCubit();
+    mockPopularTvCubit = MockPopularTvCubit();
+    mockTopRatedTvCubit = MockTopRatedTvCubit();
   });
 
-  Widget _makeTestableWidget(Widget body) {
-    return ChangeNotifierProvider<TvSeriesListNotifier>.value(
-      value: mockNotifier,
+  Widget makeTestableWidget(Widget body) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<NowPlayingTvCubit>.value(value: mockNowPlayingTvCubit),
+        BlocProvider<PopularTvCubit>.value(value: mockPopularTvCubit),
+        BlocProvider<TopRatedTvCubit>.value(value: mockTopRatedTvCubit),
+      ],
       child: MaterialApp(
         home: Scaffold(
           body: body,
@@ -30,43 +35,79 @@ void main() {
     );
   }
 
+  final tNowPlayingLoading = NowPlayingTvLoading();
+  final tNowPlayingLoaded = NowPlayingTvLoaded([dummyTvSeries]);
+  const tNowPlayingError = NowPlayingTvError('Server error');
+  final tPopularLoading = PopularTvLoading();
+  final tPopularLoaded = PopularTvLoaded([dummyTvSeries]);
+  const tPopularError = PopularTvError('Server error');
+  final tTopRatedLoading = TopRatedTvLoading();
+  final tTopRatedLoaded = TopRatedTvLoaded([dummyTvSeries]);
+  const tTopRatedError = TopRatedTvError('Server error');
+
   group('now playing', () {
     testWidgets('page should display loading indicator', (widgetTester) async {
-      when(mockNotifier.nowPlayingState).thenReturn(RequestState.Loading);
-      when(mockNotifier.popularTvSeriesState).thenReturn(RequestState.Empty);
-      when(mockNotifier.topRatedTvSeriesState).thenReturn(RequestState.Empty);
-      when(mockNotifier.message).thenReturn('');
+      when(mockNowPlayingTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tNowPlayingLoading),
+      );
+      when(mockNowPlayingTvCubit.state).thenReturn(tNowPlayingLoading);
+      when(mockPopularTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tPopularError),
+      );
+      when(mockPopularTvCubit.state).thenReturn(tPopularError);
+      when(mockTopRatedTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tTopRatedError),
+      );
+      when(mockTopRatedTvCubit.state).thenReturn(tTopRatedError);
 
       final progressBar = find.byType(CircularProgressIndicator);
 
-      await widgetTester.pumpWidget(_makeTestableWidget(TvSeriesHomePage()));
+      await widgetTester
+          .pumpWidget(makeTestableWidget(const TvSeriesHomePage()));
 
       expect(progressBar, findsOneWidget);
     });
 
     testWidgets('page should display error', (widgetTester) async {
-      when(mockNotifier.nowPlayingState).thenReturn(RequestState.Error);
-      when(mockNotifier.popularTvSeriesState).thenReturn(RequestState.Empty);
-      when(mockNotifier.topRatedTvSeriesState).thenReturn(RequestState.Empty);
-      when(mockNotifier.message).thenReturn('Server error');
+      when(mockNowPlayingTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tNowPlayingError),
+      );
+      when(mockNowPlayingTvCubit.state).thenReturn(tNowPlayingError);
+      when(mockPopularTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tPopularLoaded),
+      );
+      when(mockPopularTvCubit.state).thenReturn(tPopularLoaded);
+      when(mockTopRatedTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tTopRatedLoaded),
+      );
+      when(mockTopRatedTvCubit.state).thenReturn(tTopRatedLoaded);
 
       final textWidget = find.bySemanticsLabel('text_info_1');
 
-      await widgetTester.pumpWidget(_makeTestableWidget(TvSeriesHomePage()));
+      await widgetTester
+          .pumpWidget(makeTestableWidget(const TvSeriesHomePage()));
 
       expect(textWidget, findsOneWidget);
     });
 
     testWidgets('page should display list of data', (widgetTester) async {
-      when(mockNotifier.nowPlayingState).thenReturn(RequestState.Loaded);
-      when(mockNotifier.popularTvSeriesState).thenReturn(RequestState.Empty);
-      when(mockNotifier.topRatedTvSeriesState).thenReturn(RequestState.Empty);
-      when(mockNotifier.message).thenReturn('');
-      when(mockNotifier.nowPlayingTvSeries).thenReturn([dummyTvSeries]);
+      when(mockNowPlayingTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tNowPlayingLoaded),
+      );
+      when(mockNowPlayingTvCubit.state).thenReturn(tNowPlayingLoaded);
+      when(mockPopularTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tPopularError),
+      );
+      when(mockPopularTvCubit.state).thenReturn(tPopularError);
+      when(mockTopRatedTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tTopRatedError),
+      );
+      when(mockTopRatedTvCubit.state).thenReturn(tTopRatedError);
 
       final listView = find.byType(TvSeriesList);
 
-      await widgetTester.pumpWidget(_makeTestableWidget(TvSeriesHomePage()));
+      await widgetTester
+          .pumpWidget(makeTestableWidget(const TvSeriesHomePage()));
 
       expect(listView, findsOneWidget);
     });
@@ -74,41 +115,67 @@ void main() {
 
   group('popular', () {
     testWidgets('page should display loading indicator', (widgetTester) async {
-      when(mockNotifier.nowPlayingState).thenReturn(RequestState.Empty);
-      when(mockNotifier.popularTvSeriesState).thenReturn(RequestState.Loading);
-      when(mockNotifier.topRatedTvSeriesState).thenReturn(RequestState.Empty);
-      when(mockNotifier.message).thenReturn('');
+      when(mockNowPlayingTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tNowPlayingError),
+      );
+      when(mockNowPlayingTvCubit.state).thenReturn(tNowPlayingError);
+      when(mockPopularTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tPopularLoading),
+      );
+      when(mockPopularTvCubit.state).thenReturn(tPopularLoading);
+      when(mockTopRatedTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tTopRatedError),
+      );
+      when(mockTopRatedTvCubit.state).thenReturn(tTopRatedError);
 
       final progressBar = find.byType(CircularProgressIndicator);
 
-      await widgetTester.pumpWidget(_makeTestableWidget(TvSeriesHomePage()));
+      await widgetTester
+          .pumpWidget(makeTestableWidget(const TvSeriesHomePage()));
 
       expect(progressBar, findsOneWidget);
     });
 
     testWidgets('page should display error', (widgetTester) async {
-      when(mockNotifier.nowPlayingState).thenReturn(RequestState.Empty);
-      when(mockNotifier.popularTvSeriesState).thenReturn(RequestState.Error);
-      when(mockNotifier.topRatedTvSeriesState).thenReturn(RequestState.Empty);
-      when(mockNotifier.message).thenReturn('Server error');
+      when(mockNowPlayingTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tNowPlayingError),
+      );
+      when(mockNowPlayingTvCubit.state).thenReturn(tNowPlayingError);
+      when(mockPopularTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tPopularError),
+      );
+      when(mockPopularTvCubit.state).thenReturn(tPopularError);
+      when(mockTopRatedTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tTopRatedError),
+      );
+      when(mockTopRatedTvCubit.state).thenReturn(tTopRatedError);
 
       final textWidget = find.bySemanticsLabel('text_info_2');
 
-      await widgetTester.pumpWidget(_makeTestableWidget(TvSeriesHomePage()));
+      await widgetTester
+          .pumpWidget(makeTestableWidget(const TvSeriesHomePage()));
 
       expect(textWidget, findsOneWidget);
     });
 
     testWidgets('page should display list of data', (widgetTester) async {
-      when(mockNotifier.nowPlayingState).thenReturn(RequestState.Empty);
-      when(mockNotifier.popularTvSeriesState).thenReturn(RequestState.Loaded);
-      when(mockNotifier.topRatedTvSeriesState).thenReturn(RequestState.Empty);
-      when(mockNotifier.message).thenReturn('');
-      when(mockNotifier.popularTvSeries).thenReturn([dummyTvSeries]);
+      when(mockNowPlayingTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tNowPlayingError),
+      );
+      when(mockNowPlayingTvCubit.state).thenReturn(tNowPlayingError);
+      when(mockPopularTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tPopularLoaded),
+      );
+      when(mockPopularTvCubit.state).thenReturn(tPopularLoaded);
+      when(mockTopRatedTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tTopRatedError),
+      );
+      when(mockTopRatedTvCubit.state).thenReturn(tTopRatedError);
 
       final listView = find.byType(TvSeriesList);
 
-      await widgetTester.pumpWidget(_makeTestableWidget(TvSeriesHomePage()));
+      await widgetTester
+          .pumpWidget(makeTestableWidget(const TvSeriesHomePage()));
 
       expect(listView, findsOneWidget);
     });
@@ -116,41 +183,67 @@ void main() {
 
   group('top rated', () {
     testWidgets('page should display loading indicator', (widgetTester) async {
-      when(mockNotifier.nowPlayingState).thenReturn(RequestState.Empty);
-      when(mockNotifier.popularTvSeriesState).thenReturn(RequestState.Empty);
-      when(mockNotifier.topRatedTvSeriesState).thenReturn(RequestState.Loading);
-      when(mockNotifier.message).thenReturn('');
+      when(mockNowPlayingTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tNowPlayingError),
+      );
+      when(mockNowPlayingTvCubit.state).thenReturn(tNowPlayingError);
+      when(mockPopularTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tPopularError),
+      );
+      when(mockPopularTvCubit.state).thenReturn(tPopularError);
+      when(mockTopRatedTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tTopRatedLoading),
+      );
+      when(mockTopRatedTvCubit.state).thenReturn(tTopRatedLoading);
 
       final progressBar = find.byType(CircularProgressIndicator);
 
-      await widgetTester.pumpWidget(_makeTestableWidget(TvSeriesHomePage()));
+      await widgetTester
+          .pumpWidget(makeTestableWidget(const TvSeriesHomePage()));
 
       expect(progressBar, findsOneWidget);
     });
 
     testWidgets('page should display error', (widgetTester) async {
-      when(mockNotifier.nowPlayingState).thenReturn(RequestState.Empty);
-      when(mockNotifier.popularTvSeriesState).thenReturn(RequestState.Empty);
-      when(mockNotifier.topRatedTvSeriesState).thenReturn(RequestState.Error);
-      when(mockNotifier.message).thenReturn('Server error');
+      when(mockNowPlayingTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tNowPlayingError),
+      );
+      when(mockNowPlayingTvCubit.state).thenReturn(tNowPlayingError);
+      when(mockPopularTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tPopularError),
+      );
+      when(mockPopularTvCubit.state).thenReturn(tPopularError);
+      when(mockTopRatedTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tTopRatedError),
+      );
+      when(mockTopRatedTvCubit.state).thenReturn(tTopRatedError);
 
       final textWidget = find.bySemanticsLabel('text_info_3');
 
-      await widgetTester.pumpWidget(_makeTestableWidget(TvSeriesHomePage()));
+      await widgetTester
+          .pumpWidget(makeTestableWidget(const TvSeriesHomePage()));
 
       expect(textWidget, findsOneWidget);
     });
 
     testWidgets('page should display list of data', (widgetTester) async {
-      when(mockNotifier.nowPlayingState).thenReturn(RequestState.Empty);
-      when(mockNotifier.popularTvSeriesState).thenReturn(RequestState.Empty);
-      when(mockNotifier.topRatedTvSeriesState).thenReturn(RequestState.Loaded);
-      when(mockNotifier.message).thenReturn('');
-      when(mockNotifier.topRatedTvSeries).thenReturn([dummyTvSeries]);
+      when(mockNowPlayingTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tNowPlayingError),
+      );
+      when(mockNowPlayingTvCubit.state).thenReturn(tNowPlayingError);
+      when(mockPopularTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tPopularError),
+      );
+      when(mockPopularTvCubit.state).thenReturn(tPopularError);
+      when(mockTopRatedTvCubit.stream).thenAnswer(
+        (_) => Stream.value(tTopRatedLoaded),
+      );
+      when(mockTopRatedTvCubit.state).thenReturn(tTopRatedLoaded);
 
       final listView = find.byType(TvSeriesList);
 
-      await widgetTester.pumpWidget(_makeTestableWidget(TvSeriesHomePage()));
+      await widgetTester
+          .pumpWidget(makeTestableWidget(const TvSeriesHomePage()));
 
       expect(listView, findsOneWidget);
     });

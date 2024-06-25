@@ -43,7 +43,10 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
               } else if (state is NowPlayingTvLoaded) {
                 return TvSeriesList(state.series);
               } else if (state is NowPlayingTvError) {
-                return Text(state.message);
+                return Text(
+                  state.message,
+                  semanticsLabel: 'text_info_1',
+                );
               } else {
                 return const SizedBox();
               }
@@ -61,7 +64,10 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
               } else if (state is PopularTvLoaded) {
                 return TvSeriesList(state.series);
               } else if (state is PopularTvError) {
-                return Text(state.message);
+                return Text(
+                  state.message,
+                  semanticsLabel: 'text_info_2',
+                );
               } else {
                 return const SizedBox();
               }
@@ -79,7 +85,10 @@ class _TvSeriesHomePageState extends State<TvSeriesHomePage> {
               } else if (state is TopRatedTvLoaded) {
                 return TvSeriesList(state.series);
               } else if (state is TopRatedTvError) {
-                return Text(state.message);
+                return Text(
+                  state.message,
+                  semanticsLabel: 'text_info_3',
+                );
               } else {
                 return const SizedBox();
               }

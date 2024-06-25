@@ -1,6 +1,6 @@
 part of 'search_cubit.dart';
 
-sealed class SearchState extends Equatable {
+abstract class SearchState extends Equatable {
   const SearchState();
 
   @override

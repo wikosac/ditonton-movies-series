@@ -1,6 +1,6 @@
 part of 'now_playing_tv_cubit.dart';
 
-sealed class NowPlayingTvState extends Equatable {
+abstract class NowPlayingTvState extends Equatable {
   const NowPlayingTvState();
 
   @override

@@ -3,10 +3,7 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:tv_series/tv_series.dart';
-
-import '../provider/tv_series_season_notifier.dart';
 
 class EpisodeCardList extends StatefulWidget {
   final int id;
@@ -28,7 +25,9 @@ class _EpisodeCardListState extends State<EpisodeCardList>
   void initState() {
     super.initState();
     Future.microtask(() {
-      context.read<TvSeasonCubit>().fetchEpisodeTv(widget.id, widget.seasonNumber);
+      context
+          .read<TvSeasonCubit>()
+          .fetchEpisodeTv(widget.id, widget.seasonNumber);
     });
   }
 

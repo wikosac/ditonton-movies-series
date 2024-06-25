@@ -1,6 +1,6 @@
 part of 'tv_season_cubit.dart';
 
-sealed class TvSeasonState extends Equatable {
+abstract class TvSeasonState extends Equatable {
   const TvSeasonState();
 
   @override

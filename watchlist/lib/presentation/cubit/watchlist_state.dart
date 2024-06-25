@@ -1,6 +1,6 @@
 part of 'watchlist_cubit.dart';
 
-sealed class WatchlistState extends Equatable {
+abstract class WatchlistState extends Equatable {
   const WatchlistState();
 
   @override

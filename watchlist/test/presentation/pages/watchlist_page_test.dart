@@ -1,28 +1,26 @@
-
-import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
+import 'package:watchlist/presentation/cubit/watchlist_cubit.dart';
 import 'package:watchlist/presentation/pages/watchlist_page.dart';
-import 'package:watchlist/presentation/provider/watchlist_notifier.dart';
 
 import '../../dummy/dummy_objects.dart';
 import 'watchlist_page_test.mocks.dart';
 
-@GenerateMocks([WatchlistNotifier])
+@GenerateMocks([WatchlistCubit])
 void main() {
-  late MockWatchlistNotifier mockNotifier;
+  late MockWatchlistCubit mockCubit;
 
   setUp(() {
-    mockNotifier = MockWatchlistNotifier();
+    mockCubit = MockWatchlistCubit();
   });
 
-  Widget _makeTestableWidget(Widget body) {
-    return ChangeNotifierProvider<WatchlistNotifier>.value(
-      value: mockNotifier,
+  Widget makeTestableWidget(Widget body) {
+    return BlocProvider<WatchlistCubit>.value(
+      value: mockCubit,
       child: MaterialApp(
         home: body,
       ),
@@ -30,33 +28,36 @@ void main() {
   }
 
   testWidgets('page should display loading indicator', (widgetTester) async {
-    when(mockNotifier.watchlistState).thenReturn(RequestState.Loading);
+    when(mockCubit.stream).thenAnswer((_) => Stream.value(WatchlistLoading()));
+    when(mockCubit.state).thenReturn(WatchlistLoading());
 
     final progressBar = find.byType(CircularProgressIndicator);
 
-    await widgetTester.pumpWidget(_makeTestableWidget(WatchlistPage()));
+    await widgetTester.pumpWidget(makeTestableWidget(const WatchlistPage()));
 
     expect(progressBar, findsOneWidget);
   });
 
   testWidgets('page should display error', (widgetTester) async {
-    when(mockNotifier.watchlistState).thenReturn(RequestState.Error);
-    when(mockNotifier.message).thenReturn('Server error');
+    when(mockCubit.stream)
+        .thenAnswer((_) => Stream.value(WatchlistError('Server error')));
+    when(mockCubit.state).thenReturn(WatchlistError('Server error'));
 
-    final textWidget = find.byKey(Key('error_message'));
+    final textWidget = find.byKey(const Key('error_message'));
 
-    await widgetTester.pumpWidget(_makeTestableWidget(WatchlistPage()));
+    await widgetTester.pumpWidget(makeTestableWidget(const WatchlistPage()));
 
     expect(textWidget, findsOneWidget);
   });
 
   testWidgets('page should display list of data', (widgetTester) async {
-    when(mockNotifier.watchlistState).thenReturn(RequestState.Loaded);
-    when(mockNotifier.watchlist).thenReturn([dummyWatchlist]);
+    when(mockCubit.stream)
+        .thenAnswer((_) => Stream.value(const WatchlistLoaded([dummyWatchlist])));
+    when(mockCubit.state).thenReturn(const WatchlistLoaded([dummyWatchlist]));
 
     final listView = find.byType(AlignedGridView);
 
-    await widgetTester.pumpWidget(_makeTestableWidget(WatchlistPage()));
+    await widgetTester.pumpWidget(makeTestableWidget(const WatchlistPage()));
 
     expect(listView, findsOneWidget);
   });
