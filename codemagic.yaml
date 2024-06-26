@@ -3,6 +3,9 @@ workflows:
     name: Ditonton Movies Series
     max_build_duration: 30
     instance_type: mac_mini_m1
+    triggering:
+      events:
+        - push
     environment:
       flutter: 3.22.2
     scripts:
