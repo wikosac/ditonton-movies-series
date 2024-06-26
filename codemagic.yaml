@@ -1,0 +1,29 @@
+workflows:
+  ditonton:
+    name: Ditonton Movies Series
+    max_build_duration: 30
+    instance_type: mac_mini_m1
+    environment:
+      flutter: 3.22.2
+    scripts:
+      - name: Testing Modularization Movie
+        working_directory: movies
+        script: flutter test --machine
+      - name: Testing Modularization Search
+        working_directory: search
+        script: flutter test --machine
+      - name: Testing Modularization Tv
+        working_directory: tv_series
+        script: flutter test --machine
+      - name: Testing Modularization Watchlist
+        working_directory: watchlist
+        script: flutter test --machine
+      - name: Build Apk Release
+        script: flutter build apk --release
+    publishing:
+      email:
+        recipients:
+          - wesibrani@gmail.com
+        notify:
+          success: true
+          failure: true
