@@ -1,4 +1,4 @@
-import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 import 'package:mockito/annotations.dart';
 import 'package:watchlist/watchlist.dart';
 
@@ -7,6 +7,6 @@ import 'package:watchlist/watchlist.dart';
   WatchlistDataSource,
   DatabaseHelper,
 ], customMocks: [
-  MockSpec<http.Client>(as: #MockHttpClient)
+  MockSpec<IOClient>(as: #MockIOClient)
 ])
 void main() {}

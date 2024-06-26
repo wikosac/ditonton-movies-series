@@ -13,20 +13,20 @@ void main() {
   const API_KEY = 'api_key=2174d146bb9c0eab47529b2e77d6b526';
 
   late SearchDataSource searchDataSource;
-  late MockHttpClient mockHttpClient;
+  late MockIOClient mockIOClient;
 
   setUp(() {
-    mockHttpClient = MockHttpClient();
-    searchDataSource = SearchDataSourceImpl(client: mockHttpClient);
+    mockIOClient = MockIOClient();
+    searchDataSource = SearchDataSourceImpl(client: mockIOClient);
   });
 
   final tSearchList = [testSearchEntity];
-  final query = 'the flash';
+  const query = 'the flash';
   final tError = ServerException(message: 'Server error');
 
   test('return List<Search> if success', () async {
     when(
-      mockHttpClient.get(
+      mockIOClient.get(
         Uri.parse('$BASE_URL/search/multi?$API_KEY&query=$query'),
       ),
     ).thenAnswer(
@@ -43,12 +43,12 @@ void main() {
 
   test('return Failure if unsuccessful', () {
     when(
-      mockHttpClient.get(
+      mockIOClient.get(
         Uri.parse('$BASE_URL/search/multi?$API_KEY&query=$query'),
       ),
     ).thenThrow(tError);
 
-    final actual = () async => await searchDataSource.search(query);
+    actual() async => await searchDataSource.search(query);
 
     expect(actual, throwsA(isA<ServerException>()));
   });

@@ -3,6 +3,7 @@ library core;
 export 'errors/exception.dart';
 export 'errors/failure.dart';
 export 'routes/routes.dart';
+export 'security/ssl_config.dart';
 export 'styles/styles.dart';
 export 'usecases/usecases.dart';
 export 'utils/constants.dart';

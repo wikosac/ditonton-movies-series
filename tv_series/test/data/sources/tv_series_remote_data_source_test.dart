@@ -14,11 +14,11 @@ void main() {
   const API_KEY = 'api_key=2174d146bb9c0eab47529b2e77d6b526';
 
   late TvSeriesRemoteDataSource dataSource;
-  late MockHttpClient mockHttpClient;
+  late MockIOClient mockIOClient;
 
   setUp(() {
-    mockHttpClient = MockHttpClient();
-    dataSource = TvSeriesRemoteDataSourceImpl(client: mockHttpClient);
+    mockIOClient = MockIOClient();
+    dataSource = TvSeriesRemoteDataSourceImpl(client: mockIOClient);
   });
 
   final tTvData = dummyTvResponse;
@@ -31,7 +31,7 @@ void main() {
   group('now playing', () {
     test('return TvResponse if success', () async {
       when(
-        mockHttpClient.get(Uri.parse('$BASE_URL/tv/on_the_air?$API_KEY')),
+        mockIOClient.get(Uri.parse('$BASE_URL/tv/on_the_air?$API_KEY')),
       ).thenAnswer((_) async => http.Response(tResponse, 200));
 
       final actual = await dataSource.getNowPlayingTvSeries();
@@ -41,10 +41,10 @@ void main() {
 
     test('return Failure if unsuccessful', () {
       when(
-        mockHttpClient.get(Uri.parse('$BASE_URL/tv/on_the_air?$API_KEY')),
+        mockIOClient.get(Uri.parse('$BASE_URL/tv/on_the_air?$API_KEY')),
       ).thenAnswer((_) async => http.Response('', 404));
 
-      final actual = () async => await dataSource.getNowPlayingTvSeries();
+      actual() async => await dataSource.getNowPlayingTvSeries();
 
       expect(actual, throwsA(isA<ServerException>()));
     });
@@ -53,7 +53,7 @@ void main() {
   group('popular', () {
     test('return TvResponse if success', () async {
       when(
-        mockHttpClient.get(Uri.parse('$BASE_URL/tv/popular?$API_KEY')),
+        mockIOClient.get(Uri.parse('$BASE_URL/tv/popular?$API_KEY')),
       ).thenAnswer((_) async => http.Response(tResponse, 200));
 
       final actual = await dataSource.getPopularTvSeries();
@@ -63,10 +63,10 @@ void main() {
 
     test('return Failure if unsuccessful', () {
       when(
-        mockHttpClient.get(Uri.parse('$BASE_URL/tv/popular?$API_KEY')),
+        mockIOClient.get(Uri.parse('$BASE_URL/tv/popular?$API_KEY')),
       ).thenAnswer((_) async => http.Response('', 404));
 
-      final actual = () async => await dataSource.getPopularTvSeries();
+      actual() async => await dataSource.getPopularTvSeries();
 
       expect(actual, throwsA(isA<ServerException>()));
     });
@@ -75,7 +75,7 @@ void main() {
   group('top rated', () {
     test('return TvResponse if success', () async {
       when(
-        mockHttpClient.get(Uri.parse('$BASE_URL/tv/top_rated?$API_KEY')),
+        mockIOClient.get(Uri.parse('$BASE_URL/tv/top_rated?$API_KEY')),
       ).thenAnswer((_) async => http.Response(tResponse, 200));
 
       final actual = await dataSource.getTopRatedTvSeries();
@@ -85,10 +85,10 @@ void main() {
 
     test('return Failure if unsuccessful', () {
       when(
-        mockHttpClient.get(Uri.parse('$BASE_URL/tv/top_rated?$API_KEY')),
+        mockIOClient.get(Uri.parse('$BASE_URL/tv/top_rated?$API_KEY')),
       ).thenAnswer((_) async => http.Response('', 404));
 
-      final actual = () async => await dataSource.getTopRatedTvSeries();
+      actual() async => await dataSource.getTopRatedTvSeries();
 
       expect(actual, throwsA(isA<ServerException>()));
     });
@@ -97,7 +97,7 @@ void main() {
   group('detail', () {
     test('return DetailResponse if success', () async {
       when(
-        mockHttpClient.get(Uri.parse('$BASE_URL/tv/1?$API_KEY')),
+        mockIOClient.get(Uri.parse('$BASE_URL/tv/1?$API_KEY')),
       ).thenAnswer((_) async => http.Response(tDetailResponse, 200));
 
       final actual = await dataSource.getTvSeriesDetail(1);
@@ -107,10 +107,10 @@ void main() {
 
     test('return Failure if unsuccessful', () {
       when(
-        mockHttpClient.get(Uri.parse('$BASE_URL/tv/1?$API_KEY')),
+        mockIOClient.get(Uri.parse('$BASE_URL/tv/1?$API_KEY')),
       ).thenAnswer((_) async => http.Response('', 404));
 
-      final actual = () async => await dataSource.getTvSeriesDetail(1);
+      actual() async => await dataSource.getTvSeriesDetail(1);
 
       expect(actual, throwsA(isA<ServerException>()));
     });
@@ -119,7 +119,7 @@ void main() {
   group('recommendations', () {
     test('return TvResponse if success', () async {
       when(
-        mockHttpClient.get(Uri.parse('$BASE_URL/tv/1/recommendations?$API_KEY')),
+        mockIOClient.get(Uri.parse('$BASE_URL/tv/1/recommendations?$API_KEY')),
       ).thenAnswer((_) async => http.Response(tResponse, 200));
 
       final actual = await dataSource.getTvSeriesRecommendations(1);
@@ -129,10 +129,10 @@ void main() {
 
     test('return Failure if unsuccessful', () {
       when(
-        mockHttpClient.get(Uri.parse('$BASE_URL/tv/1/recommendations?$API_KEY')),
+        mockIOClient.get(Uri.parse('$BASE_URL/tv/1/recommendations?$API_KEY')),
       ).thenAnswer((_) async => http.Response('', 404));
 
-      final actual = () async => await dataSource.getTvSeriesRecommendations(1);
+      actual() async => await dataSource.getTvSeriesRecommendations(1);
 
       expect(actual, throwsA(isA<ServerException>()));
     });
@@ -141,7 +141,7 @@ void main() {
   group('season', () {
     test('return SeasonResponse if success', () async {
       when(
-        mockHttpClient.get(Uri.parse('$BASE_URL/tv/1/season/2?$API_KEY')),
+        mockIOClient.get(Uri.parse('$BASE_URL/tv/1/season/2?$API_KEY')),
       ).thenAnswer((_) async => http.Response(tSeasonResponse, 200));
 
       final actual = await dataSource.getTvSeriesSeason(1, 2);
@@ -151,10 +151,10 @@ void main() {
 
     test('return Failure if unsuccessful', () {
       when(
-        mockHttpClient.get(Uri.parse('$BASE_URL/tv/1/season/2?$API_KEY')),
+        mockIOClient.get(Uri.parse('$BASE_URL/tv/1/season/2?$API_KEY')),
       ).thenAnswer((_) async => http.Response('', 404));
 
-      final actual = () async => await dataSource.getTvSeriesSeason(1, 2);
+      actual() async => await dataSource.getTvSeriesSeason(1, 2);
 
       expect(actual, throwsA(isA<ServerException>()));
     });

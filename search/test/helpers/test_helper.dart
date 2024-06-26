@@ -1,4 +1,4 @@
-import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 import 'package:mockito/annotations.dart';
 import 'package:search/search.dart';
 
@@ -6,6 +6,6 @@ import 'package:search/search.dart';
   SearchRepository,
   SearchDataSource,
 ], customMocks: [
-  MockSpec<http.Client>(as: #MockHttpClient)
+  MockSpec<IOClient>(as: #MockIOClient)
 ])
 void main() {}

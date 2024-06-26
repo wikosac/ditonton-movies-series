@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:core/core.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 
 import '../models/tv_detail_response.dart';
 import '../models/tv_response.dart';
@@ -10,7 +10,7 @@ import '../models/tv_season_response.dart';
 class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
   TvSeriesRemoteDataSourceImpl({required this.client});
 
-  final http.Client client;
+  final IOClient client;
 
   @override
   Future<TvDetailResponse> getTvSeriesDetail(int id) async {
@@ -68,8 +68,8 @@ class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
 
   @override
   Future<SeasonResponse> getTvSeriesSeason(int id, int seasonNumber) async {
-    final response =
-        await client.get(Uri.parse('$BASE_URL/tv/$id/season/$seasonNumber?$API_KEY'));
+    final response = await client
+        .get(Uri.parse('$BASE_URL/tv/$id/season/$seasonNumber?$API_KEY'));
     if (response.statusCode == 200) {
       return SeasonResponse.fromJson(json.decode(response.body));
     } else {

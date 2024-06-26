@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:core/core.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 
 import '../../domain/entities/search.dart';
 import '../models/search_response.dart';
@@ -9,7 +9,7 @@ import '../models/search_response.dart';
 class SearchDataSourceImpl implements SearchDataSource {
   SearchDataSourceImpl({required this.client});
 
-  final http.Client client;
+  final IOClient client;
 
   @override
   Future<List<Search>> search(String query) async {

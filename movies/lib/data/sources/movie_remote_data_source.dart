@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:core/errors/exception.dart';
 import 'package:core/utils/constants.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 
 import '../models/movie_detail_model.dart';
 import '../models/movie_model.dart';
@@ -10,15 +10,18 @@ import '../models/movie_response.dart';
 
 abstract class MovieRemoteDataSource {
   Future<List<MovieModel>> getNowPlayingMovies();
+
   Future<List<MovieModel>> getPopularMovies();
+
   Future<List<MovieModel>> getTopRatedMovies();
+
   Future<MovieDetailResponse> getMovieDetail(int id);
+
   Future<List<MovieModel>> getMovieRecommendations(int id);
 }
 
 class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
-
-  final http.Client client;
+  final IOClient client;
 
   MovieRemoteDataSourceImpl({required this.client});
 

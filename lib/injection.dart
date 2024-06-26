@@ -1,5 +1,7 @@
+import 'dart:io';
+
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 import 'package:movies/movies.dart';
 import 'package:search/search.dart';
 import 'package:tv_series/tv_series.dart';
@@ -7,7 +9,7 @@ import 'package:watchlist/watchlist.dart';
 
 final locator = GetIt.instance;
 
-void init() {
+void init(HttpClient httpClient) {
   // provider
   locator.registerFactory(
     () => MovieDetailCubit(
@@ -137,6 +139,6 @@ void init() {
 
   // external
   locator.registerLazySingleton(
-    () => http.Client(),
+    () => IOClient(httpClient),
   );
 }
