@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "429725215963",
+    "project_id": "ditonton-bf836",
+    "storage_bucket": "ditonton-bf836.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:429725215963:android:b6088d306ee0792a8fb0fe",
+        "android_client_info": {
+          "package_name": "com.example.ditonton_tv_series"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0BB-izHBKxKrtlMCpmXdW6TfwmYcJmPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
